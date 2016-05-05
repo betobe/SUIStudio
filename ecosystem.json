@@ -14,7 +14,7 @@
     "production" : {
       "key"  : process.env.PEM,
       "user" : "ec2-user",
-      "host" : "52.26.204.191",
+      "host" : "suistudio",
       "ref"  : "origin/master",
       "repo" : "git@github.com:SUI-Components/SUIStudio.git",
       "path" : "/home/ec2-user/www/suistudio",
