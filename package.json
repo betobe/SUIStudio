@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "co": "git-cz",
-    "lint": "standard"
+    "lint": "standard",
+    "start": "nodemon server/index.js | bunyan"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "commitizen": "2.8.1",
     "cz-conventional-changelog": "1.1.6",
     "ghooks": "1.2.1",
+    "nodemon": "1.9.2",
     "npm-run-all": "1.8.0",
     "standard": "7.0.0",
     "validate-commit-msg": "2.6.1"
@@ -59,7 +61,8 @@
     "babelify": "7.3.0",
     "browserify": "13.0.0",
     "browserify-middleware": "7.0.0",
-    "debug": "2.2.0",
+    "bunyan": "1.8.1",
+    "bunyan-request": "1.2.0",
     "envify": "3.4.0",
     "express": "4.13.4"
   }
