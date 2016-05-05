@@ -1,0 +1,25 @@
+// more info: http://pm2.keymetrics.io/docs/usage/deployment
+{
+  "apps" : [
+    {
+      "name"      : "SUIStudio",
+      "script"    : "server/index.js",
+      "env": {
+        "DEBUG": "suistudio:*"
+      },
+      "env_production" : {}
+    }
+  ],
+
+  "deploy" : {
+    "production" : {
+      "key"  : "<PATH TO THE PEM FILE>",
+      "user" : "",
+      "host" : "",
+      "ref"  : "",
+      "repo" : "",
+      "path" : "",
+      "post-deploy" : "npm install && pm2 startOrRestart ecosystem.json --env production"
+    }
+  }
+}
