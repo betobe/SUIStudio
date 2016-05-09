@@ -2,7 +2,7 @@
   "apps" : [
     {
       "name"      : "SUIStudio",
-      "script"    : "server/index.js",
+      "script"    : "studio/server/index.js",
       "env": {},
       "env_production" : {}
     }
