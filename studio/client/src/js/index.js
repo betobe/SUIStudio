@@ -1,7 +1,7 @@
 import React from 'react'
 import reactDOM from 'react-dom'
 import Preview from './preview'
-import loadScript from './libs/load-scripts'
+// import loadScript from './libs/load-scripts'
 
 const HelloComponent = `
   const Hello = () => <h1>Hola Mundo</h1>
