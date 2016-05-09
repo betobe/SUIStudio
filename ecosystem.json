@@ -3,9 +3,7 @@
     {
       "name"      : "SUIStudio",
       "script"    : "server/index.js",
-      "env": {
-        "DEBUG": "suistudio:*"
-      },
+      "env": {},
       "env_production" : {}
     }
   ],
