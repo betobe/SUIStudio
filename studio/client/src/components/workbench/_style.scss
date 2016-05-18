@@ -1,0 +1,25 @@
+.SUIStudioWorkbench {
+  padding: 0;
+  
+  &-content {
+    padding: 2em;
+  }
+
+  &-navigation {
+    padding: 2em;
+    background: lightgrey;
+  }
+
+
+  &-navContainer {
+    list-style-type: none;
+    margin: 0;
+    padding: 1em;
+
+  }
+
+  &-link {
+    display: inline-block;
+    padding-right: 1em;
+  }
+}

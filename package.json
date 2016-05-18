@@ -42,12 +42,13 @@
     "json-loader": "0.5.4",
     "node-sass": "3.7.0",
     "nodemon": "1.9.2",
-    "npm-run-all": "1.8.0",
+    "npm-run-all": "2.0.0",
     "postcss-loader": "0.9.1",
     "raw-loader": "0.5.1",
     "sass-loader": "3.2.0",
     "standard": "7.0.1",
     "style-loader": "0.13.1",
+    "svg-inline-loader": "0.4.1",
     "updtr": "0.1.13",
     "validate-commit-msg": "2.6.1"
   },
@@ -58,10 +59,17 @@
     },
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
+    },
+    "suistudio": {
+      "base-dir": "src/"
     }
   },
   "standard": {
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "globals": [
+      "PWD",
+      "npm_package_config_suistudio_base_dir"
+    ]
   },
   "babel": {
     "presets": [
@@ -81,15 +89,16 @@
     }
   },
   "dependencies": {
+    "@schibstedspain/theme-basic": "3.0.1",
     "babel-standalone": "6.7.7",
-    "bunyan": "1.8.1",
-    "bunyan-request": "1.2.0",
     "classnames": "2.2.5",
-    "express": "4.13.4",
+    "klaw": "1.2.0",
+    "normalize.css": "4.1.1",
     "pmx": "0.6.1",
     "react": "15.0.2",
     "react-dom": "15.0.2",
     "react-markdown": "2.2.0",
-    "react-router": "2.4.0"
+    "react-router": "2.4.0",
+    "through2": "2.0.1"
   }
 }

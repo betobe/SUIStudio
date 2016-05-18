@@ -1,4 +1,22 @@
 .SUIStudio {
+  a {
+    color: #444444;
+    text-decoration: none;
+
+    &:hover {
+      color: grey;
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
   display: flex;
+
+  &-workbench {
+    width: 100%;
+  }
 }
 
