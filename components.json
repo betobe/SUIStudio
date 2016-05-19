@@ -6,6 +6,11 @@
   },
   {
     "category": "components",
+    "component": "autocompleted",
+    "name": "sui-autocompleted-beta"
+  },
+  {
+    "category": "components",
     "component": "icon",
     "name": "sui-icon"
   }
