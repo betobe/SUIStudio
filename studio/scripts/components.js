@@ -5,11 +5,17 @@ const {PWD, npm_package_config_suistudio_base_dir} = process.env
 
 const BASE_DIR = process.env.BASE_DIR || join(PWD, npm_package_config_suistudio_base_dir)
 const COMPONENT_FILENAME_REG_EXP = /index\.jsx?/
+const MAX_DEPTH_COMPONENT_TREE = 4
 
 const components = []
 
 const filterComponents = through2.obj(function (item, enc, next) {
-  if (basename(item.path).match(COMPONENT_FILENAME_REG_EXP)) { this.push(item) }
+  if (
+    basename(item.path).match(COMPONENT_FILENAME_REG_EXP) &&
+    item.path.replace(BASE_DIR, '').split(sep).length === MAX_DEPTH_COMPONENT_TREE
+  ) {
+    this.push(item)
+  }
   next()
 })
 

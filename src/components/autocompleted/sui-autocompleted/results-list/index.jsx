@@ -1,5 +1,5 @@
 import React from 'react'
-import ListItem from './list-item'
+import ListItem from '../list-item'
 
 export default class ResultsList extends React.Component {
   render () {
