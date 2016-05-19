@@ -8,7 +8,6 @@ const readme = require('raw!./../../../src/REAME.md')
 export default class Layout extends React.Component {
   render () {
     const {children} = this.props
-    console.log(children)
     return (
       <div className='SUIStudio'>
         <Navigation />

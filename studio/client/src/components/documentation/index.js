@@ -5,8 +5,8 @@ const reqComponentsReadme = require.context('raw!./../../../../../src', true, /^
 
 export default class Documentation extends React.Component {
   render () {
-    const {category, name} = this.props.params
-    const readme = reqComponentsReadme(`./${category}/${name}/README.md`)
+    const {category, name, component} = this.props.params
+    const readme = reqComponentsReadme(`./${category}/${name}/${component}/README.md`)
 
     return (
       <div className='SUIStudioDocumentation'>
