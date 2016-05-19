@@ -12,12 +12,12 @@ const config = getConfig({
         'index.html': [
           '<html>',
             '<head>',
-              '<link href="' + data.css + '" rel="stylesheet" type="text/css" />',
+              '<link href="/' + data.css + '" rel="stylesheet" type="text/css" />',
             '</head>',
             '<body>',
               '<div id="root"></div>',
               '<script>var __components = ' + JSON.stringify(components) + '</script>',
-              '<script src="' + data.main + '"></script>',
+              '<script src="/' + data.main + '"></script>',
             '</body>',
           '</html>'
         ].join(''),
