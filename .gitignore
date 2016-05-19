@@ -4,3 +4,7 @@ COMMANDS
 TODOs
 npm-debug.log
 studio/client/public
+.editorconfig
+.eslintrc
+.sass-lint.yml
+.scss-lint.yml
