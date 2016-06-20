@@ -7,3 +7,5 @@ export default class AutocompletedBeta extends React.Component {
     )
   }
 }
+
+AutocompletedBeta.displayName = 'AutocompletedBeta'
