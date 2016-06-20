@@ -1,15 +1,17 @@
 import React from 'react'
 
 const tryRequire = (iconName) => {
+  let svg
   try {
-    return require(`./svg/${iconName}.svg`)
+    svg = require(`!raw!./svg/${iconName}.svg`)
   } catch (e) {
     console.warn( // eslint-disable-line
       `sui-icon: <${iconName}> icon not found.
       Did you misspell the icon's name?`
     )
-    return ''
+    svg = ''
   }
+  return svg
 }
 
 export default class Icon extends React.Component {
@@ -19,7 +21,6 @@ export default class Icon extends React.Component {
     const styles = color ? {fill: color} : null
     const svg = tryRequire(name)
     const strippedSvg = svg.replace(/<svg.*?>/, '').replace(/<\/svg>/, '')
-
     return (
       <svg
         style={styles}
@@ -34,6 +35,7 @@ export default class Icon extends React.Component {
   }
 }
 
+Icon.displayName = 'Icon'
 Icon.defaultProps = {
   size: 20
 }

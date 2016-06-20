@@ -1,33 +1,62 @@
 import React from 'react'
 
-const tryRequire = ({category, name, component}) => {
-  const reqComponentsSrc = require.context('./../../../../../src', true, /^.*\/index\.jsx?/)
-  const reqComponentsSCSS = require.context('./../../../../../src', true, /^.*\/index\.scss/)
-  const noComponent = () => <h1>No Component for {`${category}/${name}/${component}`}</h1>
+import Preview from '../preview'
+import Codemirror from 'react-codemirror'
+import 'codemirror/mode/javascript/javascript'
 
-  let Component
-  try {
-    Component = reqComponentsSrc(`./${category}/${name}/${component}/index.js`).default
-  } catch (e) {
-    Component = reqComponentsSrc(`./${category}/${name}/${component}/index.jsx`).default
-  }
+import tryRequire from './try-require'
+import contextify from '../contextify'
+import deepmerge from 'deepmerge'
 
-  try {
-    reqComponentsSCSS(`./${category}/${name}/${component}/index.scss`)
-  } catch (e) { console.warn(`No styles for ${category}/${name}/${component}`) }
+const DEFAULT_CONTEXT = 'default'
+const EVIL_HACK_TO_RERENDER_AFTER_CTXT_CHANGE = ' '
 
-  return Component || noComponent
-}
+const contextByType = (ctxt, type) => deepmerge(ctxt[DEFAULT_CONTEXT], ctxt[type])
 
 export default class Demo extends React.Component {
-  render () {
-    const {category, name, component} = this.props.params
-    const Component = tryRequire({category, name, component})
+  static bootstrapWith (demo, {category, name, component}) {
+    const [Component, playground, ctxt] = tryRequire({category, name, component})
+    demo.setState({playground, Component, ctxt})
+  }
+  constructor (props, context) {
+    super(props, context)
+    this.state = {Component: (<div></div>), playground: 'NO_CODE', ctxt: false, ctxtType: 'default'}
+  }
 
+  componentDidMount () {
+    Demo.bootstrapWith(this, this.props.params)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    Demo.bootstrapWith(this, nextProps.params)
+  }
+
+  render () {
+    let {Component, playground, ctxt, ctxtType} = this.state
+    if (Component.contextTypes && ctxt) {
+      Component = contextify(Component.contextTypes, contextByType(ctxt, ctxtType))(Component)
+    }
     return (
       <div className='SUIStudioDemo'>
-        <Component />
+        {
+          Object.keys(ctxt).map(
+            (ctxtType, index) => <button className='SUIStudioDemo-context' key={index} onClick={this.handleContextChange.bind(this, ctxtType)}>{ctxtType}</button>
+          )
+        }
+        <Preview
+          code={playground}
+          scope={{React, [`${this.state.Component.displayName || Component.name}`]: Component}} />
+        <Codemirror value={playground} onChange={this.updateCode.bind(this)} options={{mode: 'javascript', lineNumbers: true}} />
       </div>
     )
+  }
+
+  updateCode (playground) {
+    this.setState({playground})
+  }
+
+  handleContextChange (ctxtType, event) {
+    event.preventDefault()
+    this.setState({ctxtType, playground: this.state.playground + EVIL_HACK_TO_RERENDER_AFTER_CTXT_CHANGE})
   }
 }

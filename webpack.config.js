@@ -1,6 +1,12 @@
 const parser = require('./studio/scripts/components')
 const getConfig = require('hjs-webpack')
 
+const paths = ({css, main, isDev}) => {
+  return !isDev
+    ? {css, main}
+    : {css: `/${css}`, main: `/${main}`}
+}
+
 const config = getConfig({
   in: 'studio/client/src/app.js',
   out: 'studio/client/public',
@@ -12,22 +18,24 @@ const config = getConfig({
         'index.html': [
           '<html>',
             '<head>',
-              '<link href="/' + data.css + '" rel="stylesheet" type="text/css" />',
+              '<meta charset="utf-8" />',
+              '<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.css"/>',
+              '<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/theme/monokai.min.css"/>',
+              '<link href="' + paths(data).css + '" rel="stylesheet" type="text/css" />',
             '</head>',
             '<body>',
               '<div id="root"></div>',
               '<script>var __components = ' + JSON.stringify(components) + '</script>',
-              '<script src="/' + data.main + '"></script>',
+              '<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.js"></script>',
+              '<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/mode/javascript/javascript.min.js"></script>',
+              '<script src="' + paths(data).main + '"></script>',
             '</body>',
           '</html>'
-        ].join(''),
-        'components.json': JSON.stringify(components, null, 2)
+        ].join('')
       })
       /*eslint-enable */
     })
   }
 })
-
-config.module.loaders.push({ test: /\.svg$/, loader: 'svg-inline' })
 
 module.exports = config

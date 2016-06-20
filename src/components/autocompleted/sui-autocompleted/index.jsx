@@ -93,6 +93,7 @@ export default class Autocompleted extends React.Component {
   }
 }
 
+Autocompleted.displayName = 'Autocompleted'
 Autocompleted.propTypes = {
   placeholder: React.PropTypes.string,
   suggests: React.PropTypes.array.isRequired,
