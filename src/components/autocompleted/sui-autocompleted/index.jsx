@@ -45,7 +45,13 @@ export default class Autocompleted extends React.Component {
     this.state = {active: FIRST_POSITION, value: props.initialValue || ''}
   }
 
-  handleSelect (suggest) {
+  /**
+   * Esto es la descripción
+   * @param {String} suggest - Esto es la descripcion de suggest
+   * @param {String} otro - Esto es la descripcion de otro
+   * @return - Esto es la descripcion del return
+  * */
+  handleSelect (suggest, otro) {
     this.setState({value: suggest.literal || suggest.content})
     this.props.handleSelect(suggest)
   }
