@@ -40,7 +40,8 @@ export default class Demo extends React.Component {
       <div className='SUIStudioDemo'>
         {
           Object.keys(ctxt).map(
-            (ctxtType, index) => <button className='SUIStudioDemo-context' key={index} onClick={this.handleContextChange.bind(this, ctxtType)}>{ctxtType}</button>
+            (ctxtType, index) =>
+              <button className='SUIStudioDemo-context' key={index} onClick={this.handleContextChange.bind(this, ctxtType)}>{ctxtType}</button>
           )
         }
         <Preview
