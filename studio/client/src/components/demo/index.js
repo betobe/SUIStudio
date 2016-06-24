@@ -5,22 +5,51 @@ import Codemirror from 'react-codemirror'
 import 'codemirror/mode/javascript/javascript'
 
 import tryRequire from './try-require'
+import ContextButtons from './ContextButtons'
+import RoutesButtons from './RoutesButtons'
 import contextify from '../contextify'
+import {matchPattern, compilePattern} from 'react-router/lib/PatternUtils' // Thx for that!
 import deepmerge from 'deepmerge'
 
 const DEFAULT_CONTEXT = 'default'
-const EVIL_HACK_TO_RERENDER_AFTER_CTXT_CHANGE = ' '
+const EVIL_HACK_TO_RERENDER_AFTER_CHANGE = ' '
 
 const contextByType = (ctxt, type) => deepmerge(ctxt[DEFAULT_CONTEXT], ctxt[type])
 
 export default class Demo extends React.Component {
   static bootstrapWith (demo, {category, name, component}) {
-    const [Component, playground, ctxt] = tryRequire({category, name, component})
-    demo.setState({playground, Component, ctxt})
+    const [Component, playground, ctxt, routes] = tryRequire({category, name, component})
+    if (routes) { compilePattern(routes.pattern) }
+    demo.setState({playground, Component, ctxt, routes})
   }
+
+  static propsWithParams (demo) {
+    if (demo.state.routes && demo.props.params && demo.props.params.splat) {
+      const matches = matchPattern(demo.state.routes.pattern, `/${demo.props.params.splat}`)
+      const params = matches.paramNames.reduce((params, name, index) => {
+        params[name] = matches.paramValues[index]
+        return params
+      }, {})
+      return Object.assign(
+        {},
+        {'__v': Math.random()},
+        demo.props,
+        {
+          routeParams: params,
+          params: Object.assign(
+            {},
+            demo.props.params,
+            params
+          )
+        }
+      )
+    }
+    return demo.props
+  }
+
   constructor (props, context) {
     super(props, context)
-    this.state = {Component: (<div></div>), playground: 'NO_CODE', ctxt: false, ctxtType: 'default'}
+    this.state = {Component: (<div></div>), playground: 'NO_CODE', ctxt: false, ctxtType: 'default', routes: false}
   }
 
   componentDidMount () {
@@ -32,32 +61,35 @@ export default class Demo extends React.Component {
   }
 
   render () {
-    let {Component, playground, ctxt, ctxtType} = this.state
+    const {category, name, component} = this.props.params
+    let {Component, playground, ctxt, ctxtType, routes} = this.state
     if (Component.contextTypes && ctxt) {
       Component = contextify(Component.contextTypes, contextByType(ctxt, ctxtType))(Component)
     }
+
+    /* Begin Black Magic */
+    // We want pass the routering props to the component in the demo
+    const HOCComponent = (props) => <Component {...Demo.propsWithParams(this)} {...props} />
+    HOCComponent.displayName = Component.displayName
+    /* END Black Magic*/
+
     return (
       <div className='SUIStudioDemo'>
-        {
-          Object.keys(ctxt).map(
-            (ctxtType, index) =>
-              <button className='SUIStudioDemo-context' key={index} onClick={this.handleContextChange.bind(this, ctxtType)}>{ctxtType}</button>
-          )
-        }
+        <ContextButtons ctxt={ctxt} onContextChange={this.handleContextChange.bind(this)} />
+        <RoutesButtons routes={routes} category={category} name={name} component={component} />
         <Preview
           code={playground}
-          scope={{React, [`${this.state.Component.displayName || Component.name}`]: Component}} />
-        <Codemirror value={playground} onChange={this.updateCode.bind(this)} options={{mode: 'javascript', lineNumbers: true}} />
+          scope={{React, [`${Component.displayName || Component.name}`]: HOCComponent}} />
+        <Codemirror value={playground} onChange={(playground) => this.setState({playground})} options={{mode: 'javascript', lineNumbers: true}} />
       </div>
     )
   }
 
-  updateCode (playground) {
-    this.setState({playground})
+  handleContextChange (ctxtType) {
+    this.setState({ctxtType, playground: this.state.playground + EVIL_HACK_TO_RERENDER_AFTER_CHANGE})
   }
 
-  handleContextChange (ctxtType, event) {
-    event.preventDefault()
-    this.setState({ctxtType, playground: this.state.playground + EVIL_HACK_TO_RERENDER_AFTER_CTXT_CHANGE})
+  handleRoutering () {
+    this.setState({playground: this.state.playground + EVIL_HACK_TO_RERENDER_AFTER_CHANGE})
   }
 }

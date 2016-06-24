@@ -1,3 +1,5 @@
+import React from 'react'
+
 const NewAuto = () => {
   return (<h1>Hi newauto</h1>)
 }

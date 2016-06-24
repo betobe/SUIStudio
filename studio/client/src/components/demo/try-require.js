@@ -3,7 +3,7 @@ const tryRequire = ({category, name, component}) => {
   const reqComponentsSCSS = require.context('./../../../../../src', true, /^.*\/index\.scss/)
   const reqComponentsPlayGround = require.context('raw!./../../../../../demo', true, /^.*\/playground/)
   const reqContextPlayGround = require.context('./../../../../../demo', true, /^.*\/context\.js/)
-  const noComponent = () => <h1>No Component for {`${category}/${name}/${component}`}</h1>
+  const reqRouterPlayGround = require.context('./../../../../../demo', true, /^.*\/routes\.js/)
 
   let Component
   try {
@@ -20,7 +20,7 @@ const tryRequire = ({category, name, component}) => {
   try {
     playground = reqComponentsPlayGround(`./${category}/${name}/${component}/playground`)
   } catch (e) {
-    playground = `return <${Component.displayName || Component.name} />`
+    playground = `return (<${Component.displayName || Component.name} />)`
   }
 
   let context
@@ -28,7 +28,12 @@ const tryRequire = ({category, name, component}) => {
     context = reqContextPlayGround(`./${category}/${name}/${component}/context.js`)
   } catch (e) { context = false }
 
-  return [Component || noComponent, playground, context]
+  let routes
+  try {
+    routes = reqRouterPlayGround(`./${category}/${name}/${component}/routes.js`)
+  } catch (e) { routes = false }
+
+  return [Component, playground, context, routes]
 }
 
 export default tryRequire
