@@ -1,4 +1,5 @@
-const parser = require('./studio/scripts/components')
+const webpack = require('webpack')
+const parser = require('./scripts/components')
 const getConfig = require('hjs-webpack')
 
 const paths = ({css, main, isDev}) => {
@@ -8,8 +9,8 @@ const paths = ({css, main, isDev}) => {
 }
 
 const config = getConfig({
-  in: 'studio/client/src/app.js',
-  out: 'studio/client/public',
+  in: 'src/app.js',
+  out: 'client/public',
   clearBeforeBuild: true,
   html: (data, cb) => {
     parser().then((components) => {
@@ -37,5 +38,15 @@ const config = getConfig({
     })
   }
 })
+
+config.plugins.push(
+  new webpack.DefinePlugin({
+    __BASE_DIR__: JSON.stringify(process.env.BASE || process.env.PWD)
+  })
+)
+
+config.module.loaders[0] = Object.assign({}, config.module.loaders[0], {query: require('./package').babel})
+
+console.log(JSON.stringify(config, null, 2))
 
 module.exports = config
