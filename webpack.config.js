@@ -41,13 +41,15 @@ const config = getConfig({
   }
 })
 
+config.output.filename = '[name].[hash].js'
+config.output.chunkFilename = '[name].[hash].chunk.js'
+
 config.plugins.push(
   new webpack.DefinePlugin({
     __BASE_DIR__: JSON.stringify(process.env.BASE || process.env.PWD)
   })
 )
 
-config.output.chunkFilename = '[name].[hash].chunk.js'
 config.plugins.push(new webpack.optimize.CommonsChunkPlugin('shared.[hash].js'))
 
 config.module.loaders[0] = Object.assign({}, config.module.loaders[0], {query: require('./package').babel})

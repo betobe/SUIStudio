@@ -6,23 +6,23 @@ const tryRequire = ({category, name, component}) => {
   const src = new Promise(resolve => {
     require.ensure([], () => {
       let bundler
-       try {
-         bundler = reqComponentsSrc(`./${category}/${name}/${component}/index.js`)
-       } catch (e) {
-         bundler = reqComponentsSrc(`./${category}/${name}/${component}/index.jsx`)
-       }
+      try {
+        bundler = reqComponentsSrc(`./${category}/${name}/${component}/index.js`)
+      } catch (e) {
+        bundler = reqComponentsSrc(`./${category}/${name}/${component}/index.jsx`)
+      }
       bundler(src => resolve(src))
     })
   })
 
   const readme = new Promise(resolve => {
     require.ensure([], () => {
-        try {
-          const bundler = reqComponentsReadme(`./${category}/${name}/${component}/README.md`)
-          bundler(src => resolve(src))
-        } catch (e) {
-          return resolve(`### ${category}/${name}/${component} no tiene README`)
-        }
+      try {
+        const bundler = reqComponentsReadme(`./${category}/${name}/${component}/README.md`)
+        bundler(src => resolve(src))
+      } catch (e) {
+        return resolve(`### ${category}/${name}/${component} no tiene README`)
+      }
     })
   })
 

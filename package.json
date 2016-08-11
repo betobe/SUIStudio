@@ -10,7 +10,7 @@
   "scripts": {
     "deploy": "NODE_ENV=production npm run build && gh-pages -d studio/client/public/",
     "phoenix": "rm -Rf node_modules && npm it",
-    "build": "webpack",
+    "build": "cross-env NODE_ENV=production webpack",
     "co": "git-cz",
     "start": "hjs-dev-server",
     "lint": "standard",
@@ -33,6 +33,7 @@
   "homepage": "https://github.com/SUI-Components/SUIStudio#readme",
   "devDependencies": {
     "commitizen": "2.8.2",
+    "cross-env": "2.0.0",
     "cz-conventional-changelog": "1.1.6",
     "ghooks": "1.2.4",
     "npm-run-all": "2.2.2",

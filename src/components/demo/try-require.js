@@ -8,11 +8,11 @@ const tryRequire = ({category, name, component}) => {
   const Component = new Promise(resolve => {
     require.ensure([], () => {
       let bundler
-       try {
-         bundler = reqComponentsSrc(`./${category}/${name}/${component}/index.js`)
-       } catch (e) {
-         bundler = reqComponentsSrc(`./${category}/${name}/${component}/index.jsx`)
-       }
+      try {
+        bundler = reqComponentsSrc(`./${category}/${name}/${component}/index.js`)
+      } catch (e) {
+        bundler = reqComponentsSrc(`./${category}/${name}/${component}/index.jsx`)
+      }
       bundler(bundle => resolve(bundle.default))
     })
   })
@@ -26,34 +26,34 @@ const tryRequire = ({category, name, component}) => {
 
   const playground = new Promise(resolve => {
     require.ensure([], () => {
-        try {
-          const bundler = reqComponentsPlayGround(`./${category}/${name}/${component}/playground`)
-          bundler(playground => resolve(playground))
-        } catch (e) {
-          return resolve(`return (<${Component.displayName || Component.name} />)`)
-        }
+      try {
+        const bundler = reqComponentsPlayGround(`./${category}/${name}/${component}/playground`)
+        bundler(playground => resolve(playground))
+      } catch (e) {
+        return resolve(`return (<${Component.displayName || Component.name} />)`)
+      }
     })
   })
 
   const context = new Promise(resolve => {
     require.ensure([], () => {
-        try {
-          const bundler = reqContextPlayGround(`./${category}/${name}/${component}/context.js`)
-          bundler(context => resolve(context))
-        } catch (e) {
-          return resolve(false)
-        }
+      try {
+        const bundler = reqContextPlayGround(`./${category}/${name}/${component}/context.js`)
+        bundler(context => resolve(context))
+      } catch (e) {
+        return resolve(false)
+      }
     })
   })
 
   const routes = new Promise(resolve => {
     require.ensure([], () => {
-        try {
-          const bundler = reqRouterPlayGround(`./${category}/${name}/${component}/routes.js`)
-          bundler(routes => resolve(routes))
-        } catch (e) {
-          return resolve(false)
-        }
+      try {
+        const bundler = reqRouterPlayGround(`./${category}/${name}/${component}/routes.js`)
+        bundler(routes => resolve(routes))
+      } catch (e) {
+        return resolve(false)
+      }
     })
   })
 
