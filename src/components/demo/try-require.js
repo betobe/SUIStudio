@@ -1,39 +1,63 @@
 const tryRequire = ({category, name, component}) => {
-  const reqComponentsSrc = require.context(`${__BASE_DIR__}/src`, true, /^.*\/index\.jsx?/)
-  const reqComponentsSCSS = require.context(`${__BASE_DIR__}/src`, true, /^.*\/index\.scss/)
-  const reqComponentsPlayGround = require.context(`raw!${__BASE_DIR__}/demo`, true, /^.*\/playground/)
-  const reqContextPlayGround = require.context(`${__BASE_DIR__}/demo`, true, /^.*\/context\.js/)
-  const reqRouterPlayGround = require.context(`${__BASE_DIR__}/demo`, true, /^.*\/routes\.js/)
+  const reqComponentsSrc = require.context(`bundle?lazy!${__BASE_DIR__}/src`, true, /^.*\/index\.jsx?/)
+  const reqComponentsSCSS = require.context(`bundle?lazy!${__BASE_DIR__}/src`, true, /^.*\/index\.scss/)
+  const reqComponentsPlayGround = require.context(`bundle?lazy!raw!${__BASE_DIR__}/demo`, true, /^.*\/playground/)
+  const reqContextPlayGround = require.context(`bundle?lazy!${__BASE_DIR__}/demo`, true, /^.*\/context\.js/)
+  const reqRouterPlayGround = require.context(`bundle?lazy!${__BASE_DIR__}/demo`, true, /^.*\/routes\.js/)
 
-  let Component
-  try {
-    Component = reqComponentsSrc(`./${category}/${name}/${component}/index.js`).default
-  } catch (e) {
-    Component = reqComponentsSrc(`./${category}/${name}/${component}/index.jsx`).default
-  }
+  const Component = new Promise(resolve => {
+    require.ensure([], () => {
+      let bundler
+       try {
+         bundler = reqComponentsSrc(`./${category}/${name}/${component}/index.js`)
+       } catch (e) {
+         bundler = reqComponentsSrc(`./${category}/${name}/${component}/index.jsx`)
+       }
+      bundler(bundle => resolve(bundle.default))
+    })
+  })
 
-  try {
-    reqComponentsSCSS(`./${category}/${name}/${component}/index.scss`)
-  } catch (e) { console.warn(`No styles for ${category}/${name}/${component}`) }
+  require.ensure([], () => {
+    try {
+      const bundler = reqComponentsSCSS(`./${category}/${name}/${component}/index.scss`)
+      bundler(src => console.info(`ADD styles ./${category}/${name}/${component}/index.scss`))
+    } catch (e) { console.warn(`No styles for ${category}/${name}/${component}`) }
+  })
 
-  let playground
-  try {
-    playground = reqComponentsPlayGround(`./${category}/${name}/${component}/playground`)
-  } catch (e) {
-    playground = `return (<${Component.displayName || Component.name} />)`
-  }
+  const playground = new Promise(resolve => {
+    require.ensure([], () => {
+        try {
+          const bundler = reqComponentsPlayGround(`./${category}/${name}/${component}/playground`)
+          bundler(playground => resolve(playground))
+        } catch (e) {
+          return resolve(`return (<${Component.displayName || Component.name} />)`)
+        }
+    })
+  })
 
-  let context
-  try {
-    context = reqContextPlayGround(`./${category}/${name}/${component}/context.js`)
-  } catch (e) { context = false }
+  const context = new Promise(resolve => {
+    require.ensure([], () => {
+        try {
+          const bundler = reqContextPlayGround(`./${category}/${name}/${component}/context.js`)
+          bundler(context => resolve(context))
+        } catch (e) {
+          return resolve(false)
+        }
+    })
+  })
 
-  let routes
-  try {
-    routes = reqRouterPlayGround(`./${category}/${name}/${component}/routes.js`)
-  } catch (e) { routes = false }
+  const routes = new Promise(resolve => {
+    require.ensure([], () => {
+        try {
+          const bundler = reqRouterPlayGround(`./${category}/${name}/${component}/routes.js`)
+          bundler(routes => resolve(routes))
+        } catch (e) {
+          return resolve(false)
+        }
+    })
+  })
 
-  return [Component, playground, context, routes]
+  return Promise.all([Component, playground, context, routes])
 }
 
 export default tryRequire

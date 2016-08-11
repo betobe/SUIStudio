@@ -3,12 +3,20 @@ import ReactMarkdown from 'react-markdown'
 
 import tryRequire from './try-require'
 
-const Markdown = ({params}) => {
-  const [_, readme] = tryRequire(params) // eslint-disable-line
+class Markdown extends React.Component {
+  constructor (props, ctxt) {
+    super(props, ctxt)
+    this.state = {readme: false}
+  }
 
-  return (
-    <ReactMarkdown source={readme} />
-  )
+  componentDidMount () {
+    tryRequire(this.props.params).then(([_, readme]) => this.setState({readme}))
+  }
+
+  render () {
+    const {readme} = this.state
+    return readme && <ReactMarkdown source={readme} />
+  }
 }
 
 Markdown.displayName = 'Markdown'

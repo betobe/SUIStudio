@@ -11,7 +11,7 @@ program
   .version(version, '    --version')
 
 program
-  .command('start')
+  .command('start').alias('s')
   .option('-d, --dir-base [dir]', 'Setup base dir where live src and demo folders', '.')
   .action(({dirBase}) => {
     const devServerExec = join(__dirname, '..', 'node_modules', 'hjs-webpack', 'bin', 'hjs-dev-server.js')
@@ -23,5 +23,8 @@ program
     )
     child.stdout.pipe(process.stdout)
   })
+
+program
+  .command('generate <category> <name> <component>', 'Create a component and her demo files').alias('g')
 
 program.parse(process.argv)

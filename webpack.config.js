@@ -2,15 +2,16 @@ const webpack = require('webpack')
 const parser = require('./scripts/components')
 const getConfig = require('hjs-webpack')
 
-const paths = ({css, main, isDev}) => {
+const paths = (data) => {
+  const {css, main, isDev} = data
   return !isDev
-    ? {css, main}
-    : {css: `/${css}`, main: `/${main}`}
+    ? {css, main, 'shared.[hash].js': data['shared.[hash].js']}
+    : {css: `/${css}`, main: `/${main}`, 'shared.[hash].js': '/' + data['shared.[hash].js']}
 }
 
 const config = getConfig({
   in: 'src/app.js',
-  out: 'client/public',
+  out: 'public',
   clearBeforeBuild: true,
   html: (data, cb) => {
     parser().then((components) => {
@@ -29,6 +30,7 @@ const config = getConfig({
               '<script>var __components = ' + JSON.stringify(components) + '</script>',
               '<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.js"></script>',
               '<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/mode/javascript/javascript.min.js"></script>',
+              '<script src="' + paths(data)['shared.[hash].js'] + '"></script>',
               '<script src="' + paths(data).main + '"></script>',
             '</body>',
           '</html>'
@@ -45,8 +47,9 @@ config.plugins.push(
   })
 )
 
-config.module.loaders[0] = Object.assign({}, config.module.loaders[0], {query: require('./package').babel})
+config.output.chunkFilename = '[name].[hash].chunk.js'
+config.plugins.push(new webpack.optimize.CommonsChunkPlugin('shared.[hash].js'))
 
-console.log(JSON.stringify(config, null, 2))
+config.module.loaders[0] = Object.assign({}, config.module.loaders[0], {query: require('./package').babel})
 
 module.exports = config

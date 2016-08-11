@@ -18,9 +18,10 @@ const contextByType = (ctxt, type) => deepmerge(ctxt[DEFAULT_CONTEXT], ctxt[type
 
 export default class Demo extends React.Component {
   static bootstrapWith (demo, {category, name, component}) {
-    const [Component, playground, ctxt, routes] = tryRequire({category, name, component})
-    if (routes) { compilePattern(routes.pattern) }
-    demo.setState({playground, Component, ctxt, routes})
+    tryRequire({category, name, component}).then(([Component, playground, ctxt, routes]) => {
+      if (routes) { compilePattern(routes.pattern) }
+      demo.setState({playground, Component, ctxt, routes})
+    })
   }
 
   static propsWithParams (demo) {

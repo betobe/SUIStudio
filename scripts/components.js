@@ -2,8 +2,9 @@ const klaw = require('klaw')
 const through2 = require('through2')
 const {join, basename, sep} = require('path')
 const {PWD} = process.env
+const {BASE} = process.env
 
-const BASE_DIR = join(PWD, 'src/')
+const BASE_DIR = join(BASE || PWD, 'src/')
 const COMPONENT_FILENAME_REG_EXP = /index\.jsx?/
 const MAX_DEPTH_COMPONENT_TREE = 4
 

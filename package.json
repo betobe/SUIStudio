@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "SUIComponents studio",
   "main": "index.js",
+  "preferGlobal": true,
   "bin": {
     "suistudio": "./bin/suistudio.js"
   },
@@ -73,14 +74,18 @@
     }
   },
   "dependencies": {
-    "@schibstedspain/theme-basic": "3.0.1",
     "@schibstedspain/suistudio-fatigue-dev": "github:SUI-Components/suistudio-fatigue-dev",
+    "@schibstedspain/theme-basic": "3.0.1",
+    "bundle-loader": "0.5.4",
     "codemirror": "5.16.0",
+    "colors": "1.1.2",
     "commander": "2.9.0",
     "deepmerge": "0.2.10",
+    "fs-extra": "0.30.0",
     "hjs-webpack": "8.3.0",
     "klaw": "1.3.0",
     "normalize.css": "4.1.1",
+    "pascal-case": "2.0.0",
     "pmx": "0.6.2",
     "react-codemirror": "0.2.6",
     "react-docgen": "2.9.1",

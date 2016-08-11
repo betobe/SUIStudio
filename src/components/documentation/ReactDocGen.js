@@ -62,17 +62,27 @@ const Props = ({props = {}}) => {
 }
 Props.displayName = 'Props'
 
-const ReactDocGen = ({params}) => {
-  const [src, _] = tryRequire(params) // eslint-disable-line
-  const parsed = reactDocs.parse(src)
-  return (
-    <div className='SUIStudioReactDocGen'>
-      <h1 className='SUIStudioReactDocGen-displayName'>{parsed.displayName || 'Missing displayName'}</h1>
-      <p className='SUIStudioReactDocGen-description'>{parsed.description || 'Missing description'}</p>
-      <div className='SUIStudioReactDocGen-methodsContainer'><Methods methods={parsed.methods} /></div>
-      <div className='SUIStudioReactDocGen-propsContainer'><Props props={parsed.props} /></div>
-    </div>
-  )
+class ReactDocGen extends React.Component {
+  constructor (props, ctxt) {
+    super(props, ctxt)
+    this.state = {parsed: false}
+  }
+
+  componentDidMount () {
+    tryRequire(this.props.params).then(([src, _]) => this.setState({parsed: reactDocs.parse(src)}))
+  }
+
+  render () {
+    const {parsed} = this.state
+    return parsed && (
+      <div className='SUIStudioReactDocGen'>
+        <h1 className='SUIStudioReactDocGen-displayName'>{parsed.displayName || 'Missing displayName'}</h1>
+        <p className='SUIStudioReactDocGen-description'>{parsed.description || 'Missing description'}</p>
+        <div className='SUIStudioReactDocGen-methodsContainer'><Methods methods={parsed.methods} /></div>
+        <div className='SUIStudioReactDocGen-propsContainer'><Props props={parsed.props} /></div>
+      </div>
+    )
+  }
 }
 
 ReactDocGen.displayName = 'ReactDocGen'
