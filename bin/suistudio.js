@@ -27,4 +27,7 @@ program
 program
   .command('generate <category> <name> <component>', 'Create a component and her demo files').alias('g')
 
+program
+  .command('build', 'Generate a static versión ready to be deploy to surge.sh or GH-Pages').alias('b')
+
 program.parse(process.argv)
