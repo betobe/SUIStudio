@@ -30,4 +30,10 @@ program
 program
   .command('build', 'Generate a static versión ready to be deploy to surge.sh or GH-Pages').alias('b')
 
+program
+  .command('release', 'Release whatever need to be release').alias('r')
+
+program
+  .command('check-release', 'Which packages must be updates').alias('cr')
+
 program.parse(process.argv)

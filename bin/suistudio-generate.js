@@ -35,12 +35,18 @@ if (VALIDS_CATEGORIES.indexOf(category) === -1) { showError('category must be on
 if (!name) { showError('name must be defined') }
 if (!component) { showError('component must be defined') }
 
-const COMPONENT_ENTRY_POINT_FILE = `${BASE_DIR}/src/${category}/${name}/${component}/index.js`
+const COMPONENT_ENTRY_JS_POINT_FILE = `${BASE_DIR}/src/${category}/${name}/${component}/index.js`
+const COMPONENT_PACKAGE_JSON_FILE = `${BASE_DIR}/src/${category}/${name}/${component}/package.json`
+const COMPONENT_ENTRY_SCSS_POINT_FILE = `${BASE_DIR}/src/${category}/${name}/${component}/index.scss`
 const COMPONENT_README_FILE = `${BASE_DIR}/src/${category}/${name}/${component}/README.md`
 
 const COMPONENT_PLAYGROUND_FILE = `${BASE_DIR}/demo/${category}/${name}/${component}/playground`
 const COMPONENT_CONTEXT_FILE = `${BASE_DIR}/demo/${category}/${name}/${component}/context.js`
 const COMPONENT_ROUTES_FILE = `${BASE_DIR}/demo/${category}/${name}/${component}/routes.js`
+
+const COMPONENTS_LIST = `${BASE_DIR}/.COMPONENTS`
+
+fse.appendFileSync(COMPONENTS_LIST, `${category}/${name}/${component}\n`)
 
 const writeFile = (path, body) => {
   fse.outputFile(
@@ -54,7 +60,43 @@ const writeFile = (path, body) => {
 }
 
 writeFile(
-COMPONENT_ENTRY_POINT_FILE,
+COMPONENT_PACKAGE_JSON_FILE,
+`
+{
+  "name": "${component}",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "rm -Rf ./lib && mkdir -p ./lib && npm run babel && npm run sass",
+    "babel": "../../../../node_modules/.bin/babel . --ignore node_modules --out-dir ./lib",
+    "sass": "../../../../node_modules/.bin/cpx \\"./**/*.scss\\" ./lib",
+    "preversion": "echo \\"preversion\\"",
+    "version": "npm run build",
+    "postversion": "git add \${PWD} && git commit -m \\"release(${category}/${name}/${component}): v$(node -p -e \\"require('./package.json').version\\")\\" && git push origin master"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@schibstedspain/suistudio-fatigue-deps": "github:SUI-Components/suistudio-fatigue-deps"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react",
+      "stage-3"
+    ],
+    "plugins": [
+      "transform-runtime"
+    ]
+  }
+}
+`
+)
+
+writeFile(
+COMPONENT_ENTRY_JS_POINT_FILE,
 `
 import React from 'react'
 
@@ -69,6 +111,11 @@ ${componentInPascal}.displayName = '${componentInPascal}'
 
 export default ${componentInPascal}
 `
+)
+
+writeFile(
+COMPONENT_ENTRY_SCSS_POINT_FILE,
+'// import something'
 )
 
 writeFile(
