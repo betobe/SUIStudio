@@ -1,7 +1,7 @@
 import Link from 'react-router/lib/Link'
 import React from 'react'
 
-const RoutesButtons = ({routes, category, name, component}) => {
+const RoutesButtons = ({routes, category, component}) => {
   return (
     <div className='SUIStudioRoutesButtons'>
     {
@@ -9,7 +9,7 @@ const RoutesButtons = ({routes, category, name, component}) => {
             .filter(key => key !== 'pattern')
             .map(
               (route, index) => {
-                const to = `/workbench/${category}/${name}/${component}/demo${routes[route]}`
+                const to = `/workbench/${category}/${component}/demo${routes[route]}`
                 return <Link className='SUIStudioRoutesButtons-link' key={index} to={to}>{route}</Link>
               }
             )

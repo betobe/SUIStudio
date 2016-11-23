@@ -17,8 +17,8 @@ const EVIL_HACK_TO_RERENDER_AFTER_CHANGE = ' '
 const contextByType = (ctxt, type) => deepmerge(ctxt[DEFAULT_CONTEXT], ctxt[type])
 
 export default class Demo extends React.Component {
-  static bootstrapWith (demo, {category, name, component}) {
-    tryRequire({category, name, component}).then(([Component, playground, ctxt, routes]) => {
+  static bootstrapWith (demo, {category, component}) {
+    tryRequire({category, component}).then(([Component, playground, ctxt, routes]) => {
       if (routes) { compilePattern(routes.pattern) }
       demo.setState({playground, Component, ctxt, routes})
     })
@@ -62,7 +62,7 @@ export default class Demo extends React.Component {
   }
 
   render () {
-    const {category, name, component} = this.props.params
+    const {category, component} = this.props.params
     let {Component, playground, ctxt, ctxtType, routes} = this.state
     if (Component.contextTypes && ctxt) {
       Component = contextify(Component.contextTypes, contextByType(ctxt, ctxtType))(Component)
@@ -70,14 +70,17 @@ export default class Demo extends React.Component {
 
     /* Begin Black Magic */
     // We want pass the routering props to the component in the demo
-    const HOCComponent = (props) => <Component {...Demo.propsWithParams(this)} {...props} />
+    const self = this
+    const HOCComponent = class HOCComponent extends React.Component {
+      render () { return (<Component {...Demo.propsWithParams(self)} {...this.props} />) }
+    }
     HOCComponent.displayName = Component.displayName
     /* END Black Magic*/
 
     return (
       <div className='SUIStudioDemo'>
         <ContextButtons ctxt={ctxt} onContextChange={this.handleContextChange.bind(this)} />
-        <RoutesButtons routes={routes} category={category} name={name} component={component} />
+        <RoutesButtons routes={routes} category={category} component={component} />
         <Preview
           code={playground}
           scope={{React, [`${Component.displayName || Component.name}`]: HOCComponent}} />

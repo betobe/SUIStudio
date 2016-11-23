@@ -13,7 +13,7 @@ export default (
   <Route>
     <Redirect from='/SUIStudio/' to='/' />
     <Route path='/' component={Layout}>
-      <Route path='workbench/:category/:name/:component' component={Workbench}>
+      <Route path='workbench/:category/:component' component={Workbench}>
         <IndexRoute component={Demo} />
         <Route path='demo' component={Demo}>
           <Route path='**' />
