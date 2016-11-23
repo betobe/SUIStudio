@@ -103,7 +103,7 @@ conventionalChangelog({
     }
     cb()
   }
-}, {}, {from: '0954491', reverse: true}).on('end', () => {
+}, {}, {reverse: true}).on('end', () => {
   // ORACLE mode
   var argPackage = process.argv[2]
   if (typeof argPackage === 'string' && argPackage.length > 0) {

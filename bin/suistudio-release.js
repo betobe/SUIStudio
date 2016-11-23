@@ -26,7 +26,7 @@ const releasesStatus = readFileSync(COMPONENTS_LIST, 'utf8')
 const releaseEachPkg = ({pkg, code} = {}) => {
   return new Promise((resolve, reject) => {
     if (code === 0) { return resolve() }
-    const version = spawn('npm', ['--no-git-tag-version', 'version', RELEASE_CODES[code]], {cwd: `${BASE_DIR}/src/${pkg}`})
+    const version = spawn('npm', ['--no-git-tag-version', 'version', RELEASE_CODES[code]], {cwd: `${BASE_DIR}/components/${pkg}`})
                       .on('error', reject)
                       .on('close', resolve)
     version.stdout.pipe(process.stdout)

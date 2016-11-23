@@ -25,7 +25,7 @@ program
   })
 
 program
-  .command('generate <category> <name> <component>', 'Create a component and her demo files').alias('g')
+  .command('generate <category> <component>', 'Create a component and her demo files').alias('g')
 
 program
   .command('build', 'Generate a static versión ready to be deploy to surge.sh or GH-Pages').alias('b')
@@ -35,5 +35,11 @@ program
 
 program
   .command('check-release', 'Which packages must be updates').alias('cr')
+
+program
+  .command('run-all <command>', 'Run the same command in each component').alias('ra')
+
+program
+  .command('link <origin> <destination>', 'Link components between them').alias('l')
 
 program.parse(process.argv)
