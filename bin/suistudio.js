@@ -42,4 +42,7 @@ program
 program
   .command('link <origin> <destination>', 'Link components between them').alias('l')
 
+program
+  .command('init <project>', 'Create a new project').alias('i')
+
 program.parse(process.argv)
