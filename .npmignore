@@ -3,7 +3,7 @@ node_modules/
 COMMANDS
 TODOs
 npm-debug.log
-public
+client/public
 .editorconfig
 .eslintrc
 .sass-lint.yml

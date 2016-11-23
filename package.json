@@ -1,12 +1,16 @@
 {
-  "name": "sui-studio",
+  "name": "@schibstedspain/sui-studio",
   "version": "0.0.1",
   "description": "SUIComponents studio",
   "main": "index.js",
+  "preferGlobal": true,
+  "bin": {
+    "suistudio": "./bin/suistudio.js"
+  },
   "scripts": {
     "deploy": "NODE_ENV=production npm run build && gh-pages -d studio/client/public/",
     "phoenix": "rm -Rf node_modules && npm it",
-    "build": "webpack",
+    "build": "cross-env NODE_ENV=production webpack",
     "co": "git-cz",
     "start": "hjs-dev-server",
     "lint": "standard",
@@ -28,27 +32,12 @@
   },
   "homepage": "https://github.com/SUI-Components/SUIStudio#readme",
   "devDependencies": {
-    "babel-eslint": "6.1.0",
-    "babel-loader": "6.2.4",
-    "babel-plugin-transform-runtime": "6.9.0",
-    "babel-preset-es2015": "6.9.0",
-    "babel-preset-react": "6.5.0",
-    "babel-preset-react-hmre": "1.1.1",
-    "babel-preset-stage-3": "6.5.0",
     "commitizen": "2.8.2",
-    "css-loader": "0.23.1",
+    "cross-env": "2.0.0",
     "cz-conventional-changelog": "1.1.6",
     "ghooks": "1.2.4",
-    "hjs-webpack": "8.3.0",
-    "json-loader": "0.5.4",
-    "node-sass": "3.8.0",
-    "nodemon": "1.9.2",
     "npm-run-all": "2.2.2",
-    "postcss-loader": "0.9.1",
-    "raw-loader": "0.5.1",
-    "sass-loader": "3.2.1",
     "standard": "7.1.2",
-    "style-loader": "0.13.1",
     "updtr": "0.2.0",
     "validate-commit-msg": "2.6.1"
   },
@@ -59,16 +48,13 @@
     },
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
-    },
-    "suistudio": {
-      "base-dir": "src/"
     }
   },
   "standard": {
     "parser": "babel-eslint",
     "globals": [
       "PWD",
-      "npm_package_config_suistudio_base_dir"
+      "__BASE_DIR__"
     ]
   },
   "babel": {
@@ -89,21 +75,24 @@
     }
   },
   "dependencies": {
+    "@schibstedspain/suistudio-fatigue-dev": "github:SUI-Components/suistudio-fatigue-dev",
     "@schibstedspain/theme-basic": "3.0.1",
-    "babel-standalone": "6.10.3",
-    "classnames": "2.2.5",
+    "babel-standalone": "6.12.0",
+    "bundle-loader": "0.5.4",
     "codemirror": "5.16.0",
+    "colors": "1.1.2",
+    "commander": "2.9.0",
     "deepmerge": "0.2.10",
+    "fs-extra": "0.30.0",
+    "hjs-webpack": "8.3.0",
     "klaw": "1.3.0",
     "normalize.css": "4.1.1",
+    "pascal-case": "2.0.0",
     "pmx": "0.6.2",
-    "react": "15.1.0",
     "react-codemirror": "0.2.6",
     "react-docgen": "2.9.1",
-    "react-dom": "15.1.0",
     "react-markdown": "2.3.0",
     "react-router": "2.5.1",
-    "svg-inline-loader": "0.6.0",
     "through2": "2.0.1"
   }
 }
