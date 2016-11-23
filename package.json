@@ -1,6 +1,6 @@
 {
   "name": "@schibstedspain/sui-studio",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "SUIComponents studio",
   "main": "index.js",
   "preferGlobal": true,
@@ -8,11 +8,8 @@
     "suistudio": "./bin/suistudio.js"
   },
   "scripts": {
-    "deploy": "NODE_ENV=production npm run build && gh-pages -d studio/client/public/",
     "phoenix": "rm -Rf node_modules && npm it",
-    "build": "cross-env NODE_ENV=production webpack",
     "co": "git-cz",
-    "start": "hjs-dev-server",
     "lint": "standard",
     "up": "updtr --test-stdout --save-exact"
   },
