@@ -6,11 +6,14 @@ const pascalCase = require('pascal-case')
 program
   .option('-R, --router', 'add routering for this component')
   .option('-C, --context', 'add context for this component')
+  .option('-P, --prefix', 'add prefix for this component')
+  .option('-S, --scope', 'add scope for this component')
   .on('--help', () => {
     console.log('  Examples:')
     console.log('')
     console.log('    $ suistudio generate <category> <component>')
     console.log('    $ suistudio generate cards alfa')
+    console.log('    $ suistudio generate searchs re-beta -P mt')
     console.log('    $ suistudio generate searchs re-beta -R -C')
     console.log('    $ custom-help --help')
     console.log('    $ custom-help -h')
@@ -20,8 +23,10 @@ program
 
 const BASE_DIR = process.cwd()
 const [category, component] = program.args
-const componentInPascal = pascalCase(component)
-const {router, context} = program
+const componentInPascal = pascalCase(`${category.replace(/s$/, '')} ${component}`)
+const {router, context, prefix = 'sui'} = program
+let {scope} = program
+scope = scope === undefined ? '' : `@${scope}/`
 
 const showError = (msg) => {
   program.outputHelp(txt => colors.red(txt))
@@ -76,7 +81,7 @@ writeFile(
 COMPONENT_PACKAGE_JSON_FILE,
 `
 {
-  "name": "${component}",
+  "name": "${scope}${prefix}-${component}",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
@@ -111,16 +116,24 @@ COMPONENT_PACKAGE_JSON_FILE,
 writeFile(
 COMPONENT_ENTRY_JS_POINT_FILE,
 `
-import React from 'react'
+import React, {Component} from 'react'
 
-const ${componentInPascal} = (props, context) => {
-  return <h1>${componentInPascal}</h1>
+class ${componentInPascal} extends Component {
+  render () {
+    return (
+      <div className='${prefix}-${componentInPascal}'>
+        <h1>${componentInPascal}</h1>
+      </div>
+    )
+  }
 }
 
 ${componentInPascal}.displayName = '${componentInPascal}'
 
-// Remove this comment if you have context
+// Remove these comments if you need
 // ${componentInPascal}.contextTypes = {i18n: React.PropTypes.object}
+// ${componentInPascal}.propTypes = {}
+// ${componentInPascal}.defaultProps = {}
 
 export default ${componentInPascal}
 `
@@ -128,7 +141,13 @@ export default ${componentInPascal}
 
 writeFile(
 COMPONENT_ENTRY_SCSS_POINT_FILE,
-'// import something'
+`
+@import '~@schibstedspain/theme-basic/lib/index';
+
+.${prefix}-${componentInPascal} {
+  // Do your magic
+}
+`
 )
 
 writeFile(

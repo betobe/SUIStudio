@@ -15,7 +15,7 @@ export default class Navigation extends React.Component {
           {
             this.state.components.map((link, index) => {
               const {category, component} = link
-              return (<li className='SUIStudioNav-link' key={index}><Link to={`/workbench/${category}/${component}`}>{component}</Link></li>)
+              return (<li className='SUIStudioNav-link' key={index}><Link to={`/workbench/${category}/${component}`}>{`${category}/${component}`}</Link></li>)
             })
           }
         </ul>
@@ -23,4 +23,3 @@ export default class Navigation extends React.Component {
     )
   }
 }
-
