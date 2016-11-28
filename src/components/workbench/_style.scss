@@ -1,21 +1,26 @@
 .SUIStudioWorkbench {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   padding: 0;
-  
-  &-content {
-    padding: 2em;
-  }
 
   &-navigation {
-    padding: 2em;
     background: lightgrey;
+    padding: 2em;
   }
 
+  &-content {
+    background-color: lighten(lightgrey, 10%);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+  }
 
   &-navContainer {
     list-style-type: none;
     margin: 0;
     padding: 1em;
-
   }
 
   &-link {

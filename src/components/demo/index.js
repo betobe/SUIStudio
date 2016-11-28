@@ -50,7 +50,7 @@ export default class Demo extends React.Component {
 
   constructor (props, context) {
     super(props, context)
-    this.state = {Component: (<div></div>), playground: 'NO_CODE', ctxt: false, ctxtType: 'default', routes: false}
+    this.state = {Component: (<div />), playground: 'NO_CODE', ctxt: false, ctxtType: 'default', routes: false}
   }
 
   componentDidMount () {
@@ -75,16 +75,27 @@ export default class Demo extends React.Component {
       render () { return (<Component {...Demo.propsWithParams(self)} {...this.props} />) }
     }
     HOCComponent.displayName = Component.displayName
-    /* END Black Magic*/
+    /* END Black Magic */
 
     return (
       <div className='SUIStudioDemo'>
-        <ContextButtons ctxt={ctxt} onContextChange={this.handleContextChange.bind(this)} />
-        <RoutesButtons routes={routes} category={category} component={component} />
-        <Preview
-          code={playground}
-          scope={{React, [`${Component.displayName || Component.name}`]: HOCComponent}} />
-        <Codemirror value={playground} onChange={(playground) => this.setState({playground})} options={{mode: 'javascript', lineNumbers: true}} />
+        <div className='SUIStudioDemo-code'>
+          <Codemirror
+            value={playground}
+            onChange={(playground) => this.setState({playground})}
+            options={{mode: 'javascript', lineNumbers: true, theme: 'material'}}
+          />
+        </div>
+        <div className='SUIStudioDemo-preview'>
+          <div className='SUIStudioDemo-buttons'>
+            <ContextButtons ctxt={ctxt} onContextChange={this.handleContextChange.bind(this)} />
+            <RoutesButtons routes={routes} category={category} component={component} />
+          </div>
+          <Preview
+            code={playground}
+            scope={{React, [`${Component.displayName || Component.name}`]: HOCComponent}}
+          />
+        </div>
       </div>
     )
   }

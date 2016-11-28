@@ -12,7 +12,7 @@ const template = (data, components) => `
   <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/theme/monokai.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.21.0/theme/material.min.css"/>
     <link href="/${data.css}" rel="stylesheet" type="text/css" />
   </head>
   <body>
@@ -23,7 +23,7 @@ const template = (data, components) => `
     <script src="/${data.shared}"></script>
     <script src="/${data.main}"></script>
   </body>
-</html>'
+</html>
 `
 
 const config = getConfig({

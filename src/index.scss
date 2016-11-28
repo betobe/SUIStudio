@@ -1,5 +1,7 @@
 @import '~normalize.css/normalize.css';
+// @import '~@schibstedspain/theme-basic/lib/index';
 @import './layout';
 @import './components/navigation/style';
 @import './components/workbench/style';
+@import './components/demo/style';
 @import './components/documentation/style';

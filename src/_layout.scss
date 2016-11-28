@@ -1,4 +1,7 @@
 .SUIStudio {
+  display: flex;
+  height: 100vh;
+
   a {
     color: #444444;
     text-decoration: none;
@@ -13,10 +16,16 @@
     padding: 0;
   }
 
-  display: flex;
+  &-sidebar {
+    background-color: lightblue;
+    box-sizing: border-box;
+    flex: 0 1 210px;
+    padding: 2em;
+  }
 
-  &-workbench {
-    width: 100%;
+  &-main {
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
   }
 }
-

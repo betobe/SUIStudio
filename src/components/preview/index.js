@@ -70,7 +70,7 @@ const Preview = React.createClass({
     try {
       const compiledCode = this.compileCode()
 
-      /*eslint-disable no-eval*/
+      /* eslint-disable no-eval */
       const Component = eval(compiledCode)(...scope)
       ReactDOM.render(Component, mountNode)
       if (this.state.error) {
@@ -84,13 +84,10 @@ const Preview = React.createClass({
   },
 
   render () {
-    let className = 'sui-Preview'
-    if (this.props.className) className += ` ${this.props.className}`
-
     return (
-      <div className={className}>
-        {this.state.error !== null ? <span className='sui-Preview-error'>{this.state.error}</span> : null}
-        <div ref='mount' className='sui-Preview-content' />
+      <div className='SUIStudioPreview'>
+        {this.state.error !== null ? <span className='SUIStudioPreview-error'>{this.state.error}</span> : null}
+        <div ref='mount' className='SUIStudioPreview-content' />
       </div>
     )
   }
