@@ -24,6 +24,7 @@
   }
 
   &-link {
+    @extend %link;
     display: inline-block;
     padding-right: 1em;
   }
