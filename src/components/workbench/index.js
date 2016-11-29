@@ -8,9 +8,15 @@ export default class Workbench extends React.Component {
       <div className='SUIStudioWorkbench'>
         <nav className='SUIStudioWorkbench-navigation'>
           <ul className='SUIStudioWorkbench-navContainer'>
-            <li className='SUIStudioWorkbench-link'><Link to={`/workbench/${category}/${component}/demo`}>Demo</Link></li>
-            <li className='SUIStudioWorkbench-link'><Link to={`/workbench/${category}/${component}/documentation`}>Documentation</Link></li>
-            <li className='SUIStudioWorkbench-link'><Link to={`/workbench/${category}/${component}/tests`}>Tests</Link></li>
+            <li className='SUIStudioWorkbench-linkWrapper'>
+              <Link className='SUIStudioWorkbench-link' to={`/workbench/${category}/${component}/demo`}>Demo</Link>
+            </li>
+            <li className='SUIStudioWorkbench-linkWrapper'>
+              <Link className='SUIStudioWorkbench-link' to={`/workbench/${category}/${component}/documentation`}>Documentation</Link>
+            </li>
+            <li className='SUIStudioWorkbench-linkWrapper'>
+              <Link className='SUIStudioWorkbench-link' to={`/workbench/${category}/${component}/tests`}>Tests</Link>
+            </li>
           </ul>
         </nav>
         <div className='SUIStudioWorkbench-content'>{this.props.children}</div>

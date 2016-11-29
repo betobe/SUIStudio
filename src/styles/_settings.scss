@@ -1,0 +1,57 @@
+// --- Colors --- //
+
+$c-primary: #005496 !default;
+$c-primary-dark: #003661 !default;
+
+$c-white: #ffffff !default;
+$c-black: #000000 !default;
+
+$c-gray: #777777 !default;
+$c-gray-dark: darken($c-gray, 20%) !default;
+$c-gray-light: lighten($c-gray, 33%) !default;
+$c-gray-lightest: lighten($c-gray-light, 15%) !default;
+
+$c-font-base: $c-gray-dark !default;
+$c-font-accent: $c-primary !default;
+$c-font-link: $c-font-accent !default;
+
+
+// --- Fonts --- //
+
+// Font family
+$ff-sans-serif: 'Open Sans', Helvetica, sans-serif !default;
+
+// Font weights
+$fw-light: 300 !default;
+$fw-regular: 400 !default;
+$fw-semi-bold: 600 !default;
+$fw-bold: 700 !default;
+
+// Font sizes
+$fz-base: 14 !default;
+$fz-body: $fz-base * 1px !default;
+$fz-s: ceil($fz-base * .666) * 1px !default;
+$fz-m: $fz-base * 1px !default;
+$fz-l: ceil(($fz-base * 1.25)) * 1px !default;
+$fz-xl: ceil($fz-base * 1.5) * 1px !default;
+
+
+// --- Layout --- //
+
+// Margins
+$m-base: 15px !default;
+$m-v: ceil($m-base / 2) !default;
+$m-h: $m-base !default;
+$m-v-small: $m-v / 2 !default;
+$m-h-small: $m-h / 2 !default;
+$m-v-large: $m-v * 2 !default;
+$m-h-large: $m-h * 2 !default;
+
+// Paddings
+$p-base: 15px !default;
+$p-v: $p-base / 1.5 !default;
+$p-h: $p-base !default;
+$p-v-small: $p-v / 2 !default;
+$p-h-small: $p-h / 2 !default;
+$p-v-large: $p-v * 2 !default;
+$p-h-large: $p-h * 2 !default;
