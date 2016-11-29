@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+require('fs.realpath').monkeypatch()
+
 const program = require('commander')
 const {execFile} = require('child_process')
 const {join} = require('path')
