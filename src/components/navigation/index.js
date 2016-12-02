@@ -11,12 +11,12 @@ export default class Navigation extends React.Component {
     return (
       <nav id='drawer' className='SUIStudioNav'>
         <ul className='SUIStudioNav-list'>
-          <li><Link className='SUIStudioNav-link' to='/'>Home</Link></li>
+          <li onClick={this.props.handleClick}><Link className='SUIStudioNav-link' to='/'>Home</Link></li>
           {
             this.state.components.map((link, index) => {
               const {category, component} = link
               return (
-                <li key={index}>
+                <li key={index} onClick={this.props.handleClick}>
                   <Link
                     className='SUIStudioNav-link'
                     to={`/workbench/${category}/${component}`}
