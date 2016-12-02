@@ -9,7 +9,7 @@ export default class Navigation extends React.Component {
 
   render () {
     return (
-      <nav className='SUIStudioNav'>
+      <nav id='drawer' className='SUIStudioNav'>
         <ul className='SUIStudioNav-list'>
           <li><Link className='SUIStudioNav-link' to='/'>Home</Link></li>
           {

@@ -4,11 +4,14 @@ const getConfig = require('hjs-webpack')
 const {join} = require('path')
 const {PWD, BASE} = process.env
 const PUBLIC_DIR = join(BASE || PWD, 'public')
-const suistudio = (require(`${PWD}/package.json`).config || {}).suistudio
+
+const baseConfig = require(`${PWD}/package.json`).config
+const suistudio = baseConfig.suistudio || {}
 const template = (data, components) => `
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.21.0/theme/material.min.css">
     <link rel="stylesheet" href="${suistudio.font}">

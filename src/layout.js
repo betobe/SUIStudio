@@ -10,10 +10,10 @@ export default class Layout extends React.Component {
     const {children} = this.props
     return (
       <div className='SUIStudio'>
-        <div className='SUIStudio-sidebar'>
-          <Navigation />
-        </div>
-        <div className='SUIStudio-main'>
+        <input type='checkbox' id='drawer-toggle' name='drawer-toggle' />
+        <label htmlFor='drawer-toggle' id='drawer-toggle-label'></label>
+        <Navigation />
+        <div id='page-content' className='SUIStudio-main'>
           {children !== null ? children : <ReactMarkdown source={readme} />}
         </div>
       </div>
