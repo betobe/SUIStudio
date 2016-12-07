@@ -1,9 +1,14 @@
+@import './drawer';
+
+$c-sidebar-background: #add8e6;
+$c-header-background: #d3d3d3;
+
 .SUIStudio {
   display: flex;
   height: 100vh;
 
   &-sidebar {
-    background-color: lightblue;
+    background-color: $c-sidebar-background;
     box-sizing: border-box;
     flex: 0 1 210px;
     padding: 2em;
@@ -13,5 +18,10 @@
     flex: 1;
     height: 100%;
     overflow: hidden;
+  }
+
+  &-header {
+    background: $c-header-background;
+    padding: 1.25em 4em;
   }
 }
