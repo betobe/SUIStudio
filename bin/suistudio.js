@@ -20,7 +20,7 @@ program
     const child = execFile(
       devServerExec,
       [],
-      {cwd: join(__dirname, '..')},
+      {cwd: join(__dirname, '..'), maxBuffer: 1024 * 500},
       console.log.bind(console)
     )
     child.stdout.pipe(process.stdout)
