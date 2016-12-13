@@ -61,7 +61,8 @@
       "stage-3"
     ],
     "plugins": [
-      "transform-runtime"
+      "transform-runtime",
+      "transform-class-properties"
     ],
     "env": {
       "development": {

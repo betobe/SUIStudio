@@ -55,5 +55,7 @@ config.plugins.push(
 )
 
 config.module.loaders[0] = Object.assign({}, config.module.loaders[0], {query: require('./package').babel})
+// TENEMOS MAS DE UNA VERSION DE REACT !!!
+config.resolve = Object.assign(config.resolve, {alias: {'react': `${__dirname}/node_modules/react`}})
 
 module.exports = config

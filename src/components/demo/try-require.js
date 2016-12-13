@@ -1,6 +1,6 @@
 const tryRequire = ({category, component}) => {
-  const reqComponentsSrc = require.context(`bundle?lazy!${__BASE_DIR__}/components`, true, /^.*\/index\.jsx?/)
-  const reqComponentsSCSS = require.context(`bundle?lazy!${__BASE_DIR__}/components`, true, /^.*\/index\.scss/)
+  const reqComponentsSrc = require.context(`bundle?lazy!${__BASE_DIR__}/components`, true, /^.*\/src\/index\.jsx?/)
+  const reqComponentsSCSS = require.context(`bundle?lazy!${__BASE_DIR__}/components`, true, /^.*\/src\/index\.scss/)
   const reqComponentsPlayGround = require.context(`bundle?lazy!raw!${__BASE_DIR__}/demo`, true, /^.*\/playground/)
   const reqContextPlayGround = require.context(`bundle?lazy!${__BASE_DIR__}/demo`, true, /^.*\/context\.js/)
   const reqRouterPlayGround = require.context(`bundle?lazy!${__BASE_DIR__}/demo`, true, /^.*\/routes\.js/)
