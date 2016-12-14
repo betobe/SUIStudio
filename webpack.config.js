@@ -50,6 +50,7 @@ const config = getConfig({
 config.plugins.push(new webpack.optimize.CommonsChunkPlugin('shared', '[name].bundle.js'))
 config.plugins.push(
   new webpack.DefinePlugin({
+    'process.env': {NODE_ENV: JSON.stringify(process.env.NODE_ENV)},
     __BASE_DIR__: JSON.stringify(process.env.BASE || process.env.PWD)
   })
 )
