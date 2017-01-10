@@ -47,4 +47,7 @@ program
 program
   .command('init <project>', 'Create a new project').alias('i')
 
+program
+  .command('clean-modules', 'Remove node_module folder in each component').alias('cm')
+
 program.parse(process.argv)
