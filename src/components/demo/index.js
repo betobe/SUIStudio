@@ -96,11 +96,11 @@ export default class Demo extends React.Component {
             options={{mode: 'javascript', lineNumbers: true, theme: 'material'}}
           />
         </div>
+        <div className='SUIStudioDemo-buttons'>
+          <ContextButtons ctxt={ctxt} onContextChange={this.handleContextChange.bind(this)} />
+          <RoutesButtons routes={routes} category={category} component={component} />
+        </div>
         <div className='SUIStudioDemo-preview'>
-          <div className='SUIStudioDemo-buttons'>
-            <ContextButtons ctxt={ctxt} onContextChange={this.handleContextChange.bind(this)} />
-            <RoutesButtons routes={routes} category={category} component={component} />
-          </div>
           <Preview
             code={playground}
             scope={{React, [`${Component.displayName || Component.name}`]: HOCComponent}}

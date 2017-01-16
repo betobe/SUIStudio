@@ -31,6 +31,8 @@
   }
 
   &-buttons {
+    border-bottom: 1px solid $c-gray-light;
+    padding: 20px 20px 10px;
   }
 
   &-preview {
@@ -42,4 +44,28 @@
   }
 
   &-code {}
+}
+
+.SUIStudioContextButtons {
+  &-context {
+    appearance: none;
+    background-color: transparent;
+    border: 1px solid $c-primary;
+    color: $c-primary;
+    cursor: pointer;
+    line-height: 30px;
+    margin-right: 20px;
+    outline: none;
+    padding: 0 10px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    text-align: center;
+    width: auto;
+    white-space: nowrap;
+
+    &:hover,
+    &.is-current {
+      background-color: $c-primary;
+      color: #fff;
+    }
+  }
 }
