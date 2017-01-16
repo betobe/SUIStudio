@@ -3,7 +3,35 @@
   flex: 1;
   flex-direction: column;
 
-  &-buttons {}
+  &-codeButton {
+    background-color: $c-primary;
+    border: 0;
+    border-radius: 100%;
+    color: #fff;
+    cursor: hand;
+    height: 50px;
+    line-height: 50px;
+    outline:none;
+    position: fixed;
+    right: 20px;
+    text-align: center;
+    top: 40px;
+    width: 50px;
+    z-index: 101;
+  }
+
+  &-code {
+    height: 0;
+    overflow: hidden;
+    transition: height 250ms;
+
+    &.is-open {
+      height: 300px;
+    }
+  }
+
+  &-buttons {
+  }
 
   &-preview {
     align-items: center;
