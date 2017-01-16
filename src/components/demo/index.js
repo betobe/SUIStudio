@@ -56,7 +56,15 @@ export default class Demo extends React.Component {
 
   constructor (props, context) {
     super(props, context)
-    this.state = {Component: (<div />), playground: 'NO_CODE', ctxt: false, ctxtType: 'default', routes: false, codeOpen: false}
+    this.state = {
+      Component: (<div />),
+      playground: 'NO_CODE',
+      ctxt: false,
+      ctxtType: 'default',
+      ctxtSelectedIndex: 0,
+      routes: false,
+      codeOpen: false
+    }
   }
 
   componentDidMount () {
@@ -69,7 +77,7 @@ export default class Demo extends React.Component {
 
   render () {
     const {category, component} = this.props.params
-    let {Component, playground, ctxt, ctxtType, routes, codeOpen} = this.state
+    let {Component, playground, ctxt, ctxtType, ctxtSelectedIndex, routes, codeOpen} = this.state
     if (Component.contextTypes && ctxt) {
       Component = contextify(Component.contextTypes, contextByType(ctxt, ctxtType))(Component)
     }
@@ -97,7 +105,10 @@ export default class Demo extends React.Component {
           />
         </div>
         <div className='SUIStudioDemo-buttons'>
-          <ContextButtons ctxt={ctxt} onContextChange={this.handleContextChange.bind(this)} />
+          <ContextButtons
+            ctxt={ctxt}
+            selected={ctxtSelectedIndex}
+            onContextChange={this.handleContextChange.bind(this)} />
           <RoutesButtons routes={routes} category={category} component={component} />
         </div>
         <div className='SUIStudioDemo-preview'>
@@ -114,8 +125,12 @@ export default class Demo extends React.Component {
     this.setState({codeOpen: !this.state.codeOpen})
   }
 
-  handleContextChange (ctxtType) {
-    this.setState({ctxtType, playground: this.state.playground + EVIL_HACK_TO_RERENDER_AFTER_CHANGE})
+  handleContextChange (ctxtType, index) {
+    this.setState({
+      ctxtType,
+      ctxtSelectedIndex: index,
+      playground: this.state.playground + EVIL_HACK_TO_RERENDER_AFTER_CHANGE
+    })
   }
 
   handleRoutering () {
