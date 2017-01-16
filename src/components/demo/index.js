@@ -1,4 +1,5 @@
 import React from 'react'
+import cx from 'classnames'
 
 import Preview from '../preview'
 import Codemirror from 'react-codemirror'
@@ -55,7 +56,7 @@ export default class Demo extends React.Component {
 
   constructor (props, context) {
     super(props, context)
-    this.state = {Component: (<div />), playground: 'NO_CODE', ctxt: false, ctxtType: 'default', routes: false}
+    this.state = {Component: (<div />), playground: 'NO_CODE', ctxt: false, ctxtType: 'default', routes: false, codeOpen: false}
   }
 
   componentDidMount () {
@@ -68,7 +69,7 @@ export default class Demo extends React.Component {
 
   render () {
     const {category, component} = this.props.params
-    let {Component, playground, ctxt, ctxtType, routes} = this.state
+    let {Component, playground, ctxt, ctxtType, routes, codeOpen} = this.state
     if (Component.contextTypes && ctxt) {
       Component = contextify(Component.contextTypes, contextByType(ctxt, ctxtType))(Component)
     }
@@ -82,9 +83,13 @@ export default class Demo extends React.Component {
     HOCComponent.displayName = Component.displayName
     /* END Black Magic */
 
+    const codeClassName = cx('SUIStudioDemo-code', {
+      'is-open': codeOpen
+    })
     return (
       <div className='SUIStudioDemo'>
-        <div className='SUIStudioDemo-code'>
+        <button className='SUIStudioDemo-codeButton' onClick={this.handleCode.bind(this)}>{'< />'}</button>
+        <div className={codeClassName}>
           <Codemirror
             value={playground}
             onChange={(playground) => this.setState({playground})}
@@ -103,6 +108,10 @@ export default class Demo extends React.Component {
         </div>
       </div>
     )
+  }
+
+  handleCode () {
+    this.setState({codeOpen: !this.state.codeOpen})
   }
 
   handleContextChange (ctxtType) {
