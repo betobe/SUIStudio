@@ -5,8 +5,8 @@ const {join} = require('path')
 const {PWD, BASE} = process.env
 const PUBLIC_DIR = join(BASE || PWD, 'public')
 
-const baseConfig = require(`${PWD}/package.json`).config
-const suistudio = baseConfig.suistudio || {}
+const { suistudio = {} } = require(`${PWD}/package.json`).config
+
 const template = (data, components) => `
 <html>
   <head>
@@ -55,8 +55,12 @@ config.plugins.push(
   })
 )
 
-config.module.loaders[0] = Object.assign({}, config.module.loaders[0], {query: require('./package').babel})
-// TENEMOS MAS DE UNA VERSION DE REACT !!!
-config.resolve = Object.assign(config.resolve, {alias: {'react': `${__dirname}/node_modules/react`}})
+Object.assign(config.module.loaders[0], {
+  exclude: /node_modules(?!\/@schibstedspain\/sui-studio\/src)/, // make it work globally
+  query: require('./package').babel
+})
+
+// We've more than one React version
+Object.assign(config.resolve, {alias: {'react': `${__dirname}/node_modules/react`}})
 
 module.exports = config
