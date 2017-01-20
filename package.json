@@ -12,7 +12,7 @@
     "co": "git-cz",
     "lint": "standard",
     "up": "updtr --test-stdout --save-exact"
-    },
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SUI-Components/SUIStudio.git"
