@@ -91,7 +91,7 @@ COMPONENT_PACKAGE_JSON_FILE,
     "sass": "../../../node_modules/.bin/cpx \\"./src/**/*.scss\\" ./lib",
     "preversion": "echo \\"preversion\\"",
     "version": "npm run build",
-    "postversion": "git add \${PWD} && git commit -m \\"release(${category}/${component}): v$(node -p -e \\"require('./package.json').version\\")\\" && git push origin master && npm publish --access=public"
+    "postversion": "git add \${PWD} && git commit -m \\"release(${category}/${component}): v$(node -p -e \\"require('./package.json').version\\")\\" && git push origin master && npm publish"
   },
   "keywords": [],
   "author": "",
