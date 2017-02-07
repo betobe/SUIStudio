@@ -7,7 +7,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 const devServerExec = join(__dirname, '..', 'node_modules', '.bin', 'webpack')
 const child = execFile(
   devServerExec,
-  [],
+  ['--env.prod', '-p'],
   {cwd: join(__dirname, '..')},
   (err, stdout, stderr) => {
     if (err) { console.log(colors.red(err.msg)) }

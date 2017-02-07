@@ -32,9 +32,8 @@ module.exports = (...args) => {
     Object.assign(config.module.loaders[0], {
       exclude: /node_modules(?!\/@schibstedspain\/sui-studio\/src)/, // make it work globally
     })
-    // config.resolve = {alias: {'react': `${__dirname}/node_modules/react`}}
+    Object.assign(config.resolve, {alias: {'react': `${__dirname}/node_modules/react`}})
 
-    console.log(JSON.stringify(config, null, 2))
     return config
   })
 }

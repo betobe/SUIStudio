@@ -19,7 +19,7 @@ program
     const devServerExec = join(__dirname, '..', 'node_modules', 'webpack-dev-server', 'bin', 'webpack-dev-server.js')
     const child = execFile(
       devServerExec,
-      ['--env.dev', '--hot', '--history-api-fallback'],
+      ['--env.dev', '--history-api-fallback'],
       {cwd: join(__dirname, '..'), maxBuffer: 1024 * 500, env: process.env},
       console.log.bind(console)
     )
