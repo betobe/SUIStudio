@@ -13,7 +13,7 @@ export default class Navigation extends React.Component {
         <ul className='SUIStudioNav-list'>
           <li onClick={this.props.handleClick}><Link className='SUIStudioNav-link' to='/'>Home</Link></li>
           {
-            this.state.components.map((link, index) => {
+            (this.state.components || []).map((link, index) => {
               const {category, component} = link
               return (
                 <li key={index} onClick={this.props.handleClick}>
