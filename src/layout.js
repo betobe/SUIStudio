@@ -24,10 +24,10 @@ export default class Layout extends React.Component {
     const {open} = this.state
     return (
       <div className='SUIStudio'>
-        <input type='checkbox' id='drawer-toggle' checked={open} onChange={this.handleClick} name='drawer-toggle' />
-        <label htmlFor='drawer-toggle' id='drawer-toggle-label'></label>
+        <input className='SUIStudioNav-toggle' type='checkbox' id='drawer-toggle' checked={open} onChange={this.handleClick} name='drawer-toggle' />
+        <label className='SUIStudioNav-icon' htmlFor='drawer-toggle' id='drawer-toggle-label'></label>
         <Navigation handleClick={this.handleClick} />
-        <div id='page-content' className='SUIStudio-main'>
+        <div className='SUIStudio-main'>
           {
             children !== null ? children
                               : this._mainReadme
