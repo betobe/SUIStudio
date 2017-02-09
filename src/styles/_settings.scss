@@ -15,6 +15,10 @@ $c-font-base: $c-gray-dark !default;
 $c-font-accent: $c-primary !default;
 $c-font-link: $c-font-accent !default;
 
+$c-sidebar-background: #add8e6;
+$c-header-background: #d3d3d3;
+
+
 
 // --- Fonts --- //
 
@@ -39,7 +43,7 @@ $fz-xl: ceil($fz-base * 1.5) * 1px !default;
 // --- Layout --- //
 
 // Margins
-$m-base: 15px !default;
+$m-base: 10px !default;
 $m-v: ceil($m-base / 2) !default;
 $m-h: $m-base !default;
 $m-v-small: $m-v / 2 !default;
@@ -48,10 +52,24 @@ $m-v-large: $m-v * 2 !default;
 $m-h-large: $m-h * 2 !default;
 
 // Paddings
-$p-base: 15px !default;
+$p-base: 10px !default;
 $p-v: $p-base / 1.5 !default;
 $p-h: $p-base !default;
 $p-v-small: $p-v / 2 !default;
 $p-h-small: $p-h / 2 !default;
 $p-v-large: $p-v * 2 !default;
 $p-h-large: $p-h * 2 !default;
+
+// Lineheight
+$lh-save-tab: 44px !default; // Save tab size for links
+
+
+// Breakpoints
+$breakpoints: (
+  xxs: 0,
+  xs: 350px,
+  s: 576px,
+  m: 768px,
+  l: 992px,
+  xl: 1200px
+) !default;
