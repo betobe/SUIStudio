@@ -1,5 +1,3 @@
-@import './drawer';
-
 $c-sidebar-background: #add8e6;
 $c-header-background: #d3d3d3;
 
@@ -15,9 +13,12 @@ $c-header-background: #d3d3d3;
   }
 
   &-main {
+    background-color: #fff;
     flex: 1;
     height: 100%;
     overflow: hidden;
+    transition: transform .250s ease;
+    z-index: 101;
   }
 
   &-header {

@@ -1,10 +1,92 @@
 .SUIStudioNav {
+  align-items: center;
+  background-color: $c-gray-lightest;
+  border-right: 1px solid darken($c-gray-lightest, 10%);
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  width: 80vw;
+  z-index: 100;
+
+  &-toggle {
+    opacity: 0;
+    position: absolute;
+
+    &:checked,
+    &:checked ~ .SUIStudioNav-icon,
+    &:checked ~ .SUIStudio-main {
+      transform: translateX(80vw);
+      @media (min-width: map-get($breakpoints, 'xs')) {
+        width: 50px;
+      }
+    }
+
+    &:checked ~ .SUIStudioNav-icon {
+      height: 100vh;
+      width: 20vw;
+    }
+  }
+
+  &-icon {
+    background: rgba(255, 255, 255, 0);
+    display: block;
+    height: 50px;
+    left: 0;
+    position: fixed;
+    transition: transform .250s ease;
+    user-select: none;
+    width: 50px;
+    z-index: 110;
+
+    &:before {
+      background: $c-gray;
+      box-shadow: 0 6px 0 $c-gray, 0 12px 0 $c-gray;
+      content: "";
+      display: block;
+      height: 2px;
+      left: 13px;
+      position: absolute;
+      top: 18px;
+      width: 24px;
+    }
+  }
+
+  &-logo {
+    margin: 20px;
+  }
+
+  &-search {
+    border-bottom: 1px solid darken($c-gray-lightest, 10%);
+    width: 100%;
+  }
+
+  &-searchInput {
+    border: none;
+    color: $c-gray-light;
+    font-size: 1.2em;
+    outline: none;
+    padding: 10px 20px;
+    width: 100%;
+  }
+
   &-list {
     list-style-type: none;
-    padding: 0;
+    padding: 0 20px;
+    width: 100%;
   }
 
   &-link {
-    @extend %link;
+    color: $c-gray;
+    text-decoration: none;
+    font-size: $fz-l;
+    line-height: $lh-save-tab;
+    display: block;
+    margin-bottom: $m-base;
+
+    &:hover {
+      color: $c-gray-dark;
+    }
   }
 }
