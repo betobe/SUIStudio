@@ -5,6 +5,8 @@ const tryRequire = ({category, component}) => {
   const reqContextPlayGround = require.context(`bundle?lazy!${__BASE_DIR__}/demo`, true, /^.*\/context\.js/)
   const reqRouterPlayGround = require.context(`bundle?lazy!${__BASE_DIR__}/demo`, true, /^.*\/routes\.js/)
 
+  // const reqThemePlayGround = require.context(`bundle?lazy!${__BASE_DIR__}/demo`, true, /^.*\/themes\/.*\.scss/)
+
   const Component = new Promise(resolve => {
     require.ensure([], () => {
       let bundler
@@ -20,6 +22,7 @@ const tryRequire = ({category, component}) => {
   require.ensure([], () => {
     try {
       const bundler = reqComponentsSCSS(`./${category}/${component}/src/index.scss`)
+      // const bundler = reqThemePlayGround(`./${category}/${component}/themes/coches.scss`)
       bundler(src => console.info(`ADD styles ./${category}/${component}/src/index.scss`))
     } catch (e) { console.warn(`No styles for ${category}/${component}`) }
   })

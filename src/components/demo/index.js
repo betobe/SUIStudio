@@ -15,18 +15,28 @@ import deepmerge from 'deepmerge'
 const DEFAULT_CONTEXT = 'default'
 const EVIL_HACK_TO_RERENDER_AFTER_CHANGE = ' '
 
-const contextByType = (ctxt, type) => deepmerge(ctxt[DEFAULT_CONTEXT], ctxt[type])
+const contextByType = (ctxt, type) => omit(deepmerge(ctxt[DEFAULT_CONTEXT], ctxt[type]), 'query')
 const isFunction = (fnc) => !!(fnc && fnc.constructor && fnc.call && fnc.apply)
+const contein = (arr, item) => arr.find(i => i === item)
+const omit = (obj, ...keys) => Object
+                                .keys(obj)
+                                .reduce((acc, k) => {
+                                  if (contein(keys, k)) { return acc }
+                                  acc[k] = obj[k]
+                                  return acc
+                                }, {})
 
 export default class Demo extends React.Component {
   static bootstrapWith (demo, {category, component}) {
     tryRequire({category, component}).then(([Component, playground, ctxt, routes]) => {
       if (routes) { compilePattern(routes.pattern) }
       if (isFunction(ctxt)) {
-        return ctxt().then(context => demo.setState({playground, Component, ctxt: context, routes}))
+        return ctxt().then(context => {
+          demo.setState({playground, Component, ctxt: context, routes, query: ctxt.query})
+        })
       }
 
-      demo.setState({playground, Component, ctxt, routes})
+      demo.setState({playground, Component, ctxt, routes, query: ctxt.query})
     })
   }
 
