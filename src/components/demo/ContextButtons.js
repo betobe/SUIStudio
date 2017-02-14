@@ -4,6 +4,7 @@ import cx from 'classnames'
 const ContextButtons = ({ctxt, onContextChange, selected}) => {
   return (
     <div className='SUIStudioContextButtons'>
+    <p className='SUIStudioContextButtons-title'>Contexts:</p>
     {
       Object.keys(ctxt).map(
         (ctxtType, index) => {

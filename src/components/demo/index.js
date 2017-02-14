@@ -8,6 +8,7 @@ import 'codemirror/mode/javascript/javascript'
 import tryRequire from './try-require'
 import ContextButtons from './ContextButtons'
 import RoutesButtons from './RoutesButtons'
+import ThemesButtons from './ThemesButtons'
 import contextify from '../contextify'
 import {matchPattern, compilePattern} from 'react-router/lib/PatternUtils' // Thx for that!
 import deepmerge from 'deepmerge'
@@ -25,10 +26,11 @@ const omit = (obj, ...keys) => Object
                                   acc[k] = obj[k]
                                   return acc
                                 }, {})
+const reqThemePlayGround = require.context(`bundle?lazy!${__BASE_DIR__}/demo`, true, /^.*\/themes\/.*\.scss/)
 
 export default class Demo extends React.Component {
-  static bootstrapWith (demo, {category, component}) {
-    tryRequire({category, component}).then(([Component, playground, ctxt, routes]) => {
+  static bootstrapWith (demo, {category, component}, {theme = false}) {
+    tryRequire({category, component, theme}).then(([Component, playground, ctxt, routes]) => {
       if (routes) { compilePattern(routes.pattern) }
       if (isFunction(ctxt)) {
         return ctxt().then(context => {
@@ -72,22 +74,36 @@ export default class Demo extends React.Component {
       ctxt: false,
       ctxtType: 'default',
       ctxtSelectedIndex: 0,
+      themes: [],
       routes: false,
       codeOpen: false
     }
   }
 
   componentDidMount () {
-    Demo.bootstrapWith(this, this.props.params)
+    const {category, component} = this.props.params
+    const themes = reqThemePlayGround.keys()
+                                     .filter(p => p.includes(`${category}/${component}`))
+                                     .map(p => p.replace(`./${category}/${component}/themes/`, ''))
+                                     .map(p => p.replace('.scss', ''))
+    this.setState({themes})
+    Demo.bootstrapWith(this, this.props.params, this.props.location.query)
   }
 
   componentWillReceiveProps (nextProps) {
-    Demo.bootstrapWith(this, nextProps.params)
+    const {category, component} = nextProps.params
+    const themes = reqThemePlayGround.keys()
+                                     .filter(p => p.includes(`${category}/${component}`))
+                                     .map(p => p.replace(`./${category}/${component}/themes/`, ''))
+                                     .map(p => p.replace('.scss', ''))
+    this.setState({themes})
+    Demo.bootstrapWith(this, nextProps.params, nextProps.location.query)
   }
 
   render () {
     const {category, component} = this.props.params
-    let {Component, playground, ctxt, ctxtType, ctxtSelectedIndex, routes, codeOpen} = this.state
+    const {theme = 'default'} = this.props.location.query
+    let {Component, playground, ctxt, ctxtType, ctxtSelectedIndex, routes, themes, codeOpen} = this.state
     if (Component.contextTypes && ctxt) {
       Component = contextify(Component.contextTypes, contextByType(ctxt, ctxtType))(Component)
     }
@@ -120,6 +136,7 @@ export default class Demo extends React.Component {
             selected={ctxtSelectedIndex}
             onContextChange={this.handleContextChange.bind(this)} />
           <RoutesButtons routes={routes} category={category} component={component} />
+          <ThemesButtons themes={themes} category={category} component={component} selected={theme}/>
         </div>
         <div className='SUIStudioDemo-preview'>
           <Preview
