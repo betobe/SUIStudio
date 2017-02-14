@@ -16,10 +16,10 @@ program
   .command('start').alias('s')
   .option('-d, --dir-base [dir]', 'Setup base dir where live src and demo folders', '.')
   .action(({dirBase}) => {
-    const devServerExec = join(__dirname, '..', 'node_modules', 'webpack-dev-server', 'bin', 'webpack-dev-server.js')
+    const devServerExec = join(__dirname, '..', 'node_modules', '@schibstedspain', 'suistudio-webpack', 'bin', 'suistudio-webpack-dev.js')
     const child = execFile(
       devServerExec,
-      ['--env.dev', '--history-api-fallback'],
+      [],
       {cwd: join(__dirname, '..'), maxBuffer: 1024 * 500, env: process.env},
       console.log.bind(console)
     )

@@ -1,10 +1,19 @@
 import React from 'react'
 import {Link} from 'react-router'
 
+const reqPackages = require.context(`${__BASE_DIR__}/components`, true, /^\.\/\w+\/\w+\/package\.json/)
+
 export default class Navigation extends React.Component {
   constructor () {
     super()
-    this.state = {components: window.__components}
+    const components = reqPackages.keys()
+                                  .map(k => k.replace(/\.\//, '')
+                                  .replace(/\/package\.json/, ''))
+                                  .map(k => {
+                                    const [category, component] = k.split('/')
+                                    return {category, component}
+                                  })
+    this.state = {components}
   }
 
   render () {
