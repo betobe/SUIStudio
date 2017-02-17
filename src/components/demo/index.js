@@ -2,12 +2,14 @@ import React from 'react'
 import cx from 'classnames'
 
 import Preview from '../preview'
+import Style from '../style'
 import Codemirror from 'react-codemirror'
 import 'codemirror/mode/javascript/javascript'
 
 import tryRequire from './try-require'
 import ContextButtons from './ContextButtons'
 import RoutesButtons from './RoutesButtons'
+import ThemesButtons from './ThemesButtons'
 import contextify from '../contextify'
 import {matchPattern, compilePattern} from 'react-router/lib/PatternUtils' // Thx for that!
 import deepmerge from 'deepmerge'
@@ -15,15 +17,26 @@ import deepmerge from 'deepmerge'
 const DEFAULT_CONTEXT = 'default'
 const EVIL_HACK_TO_RERENDER_AFTER_CHANGE = ' '
 
+const reqThemePlayGround = require.context(`!css-content!css!sass!${__BASE_DIR__}/demo`, true, /^.*\/themes\/.*\.scss/)
+const reqComponentsSCSS = require.context(`!css-content!css!sass!${__BASE_DIR__}/components`, true, /^\.\/\w+\/\w+\/src\/index\.scss/)
+
 const contextByType = (ctxt, type) => deepmerge(ctxt[DEFAULT_CONTEXT], ctxt[type])
 const isFunction = (fnc) => !!(fnc && fnc.constructor && fnc.call && fnc.apply)
+
+const themesFor = ({category, component}) =>
+  reqThemePlayGround.keys()
+    .filter(p => p.includes(`${category}/${component}`))
+    .map(p => p.replace(`./${category}/${component}/themes/`, ''))
+    .map(p => p.replace('.scss', ''))
 
 export default class Demo extends React.Component {
   static bootstrapWith (demo, {category, component}) {
     tryRequire({category, component}).then(([Component, playground, ctxt, routes]) => {
       if (routes) { compilePattern(routes.pattern) }
       if (isFunction(ctxt)) {
-        return ctxt().then(context => demo.setState({playground, Component, ctxt: context, routes}))
+        return ctxt().then(context => {
+          demo.setState({playground, Component, ctxt: context, routes})
+        })
       }
 
       demo.setState({playground, Component, ctxt, routes})
@@ -62,22 +75,40 @@ export default class Demo extends React.Component {
       ctxt: false,
       ctxtType: 'default',
       ctxtSelectedIndex: 0,
+      themes: [],
+      theme: 'default',
+      themeSelectedIndex: -1,
       routes: false,
       codeOpen: false
     }
   }
 
   componentDidMount () {
+    const themes = themesFor(this.props.params)
+    this.setState({themes})
     Demo.bootstrapWith(this, this.props.params)
   }
 
   componentWillReceiveProps (nextProps) {
+    const themes = themesFor(nextProps.params)
+    this.setState({themes})
     Demo.bootstrapWith(this, nextProps.params)
   }
 
   render () {
     const {category, component} = this.props.params
-    let {Component, playground, ctxt, ctxtType, ctxtSelectedIndex, routes, codeOpen} = this.state
+    let {
+      Component,
+      codeOpen,
+      ctxt,
+      ctxtSelectedIndex,
+      ctxtType,
+      playground,
+      routes,
+      theme,
+      themeSelectedIndex,
+      themes
+    } = this.state
     if (Component.contextTypes && ctxt) {
       Component = contextify(Component.contextTypes, contextByType(ctxt, ctxtType))(Component)
     }
@@ -94,8 +125,29 @@ export default class Demo extends React.Component {
     const codeClassName = cx('SUIStudioDemo-code', {
       'is-open': codeOpen
     })
+
+    let style
+    require.ensure([], () => {
+      try {
+        if (theme === 'default') {
+          style = reqComponentsSCSS(`./${category}/${component}/src/index.scss`)
+          console.groupCollapsed()
+          console.info(`ADD styles ./${category}/${component}/src/index.scss`)
+          console.log(style)
+          console.groupEnd()
+        } else {
+          style = reqThemePlayGround(`./${category}/${component}/themes/${theme}.scss`)
+          console.groupCollapsed()
+          console.info(`ADD styles ./${category}/${component}/themes/${theme}.scss`)
+          console.log(style)
+          console.groupEnd()
+        }
+      } catch (e) { console.warn(`No styles for ${category}/${component}`) }
+    })
+
     return (
       <div className='SUIStudioDemo'>
+        <Style>{style}</Style>
         <button className='SUIStudioDemo-codeButton' onClick={this.handleCode.bind(this)}>{'< />'}</button>
         <div className={codeClassName}>
           <Codemirror
@@ -109,6 +161,10 @@ export default class Demo extends React.Component {
             ctxt={ctxt}
             selected={ctxtSelectedIndex}
             onContextChange={this.handleContextChange.bind(this)} />
+          <ThemesButtons
+            themes={themes}
+            selected={themeSelectedIndex}
+            onThemeChange={this.handleThemeChange.bind(this)} />
           <RoutesButtons routes={routes} category={category} component={component} />
         </div>
         <div className='SUIStudioDemo-preview'>
@@ -130,6 +186,13 @@ export default class Demo extends React.Component {
       ctxtType,
       ctxtSelectedIndex: index,
       playground: this.state.playground + EVIL_HACK_TO_RERENDER_AFTER_CHANGE
+    })
+  }
+
+  handleThemeChange (theme, index) {
+    this.setState({
+      theme,
+      themeSelectedIndex: index
     })
   }
 
