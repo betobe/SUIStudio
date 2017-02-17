@@ -81,6 +81,7 @@
     "codemirror": "5.16.0",
     "colors": "1.1.2",
     "commander": "2.9.0",
+    "css-content-loader": "1.0.0",
     "deepmerge": "0.2.10",
     "fs-extra": "0.30.0",
     "fs.realpath": "1.0.0",
