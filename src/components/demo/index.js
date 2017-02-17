@@ -2,6 +2,7 @@ import React from 'react'
 import cx from 'classnames'
 
 import Preview from '../preview'
+import Style from '../style'
 import Codemirror from 'react-codemirror'
 import 'codemirror/mode/javascript/javascript'
 
@@ -19,18 +20,26 @@ const EVIL_HACK_TO_RERENDER_AFTER_CHANGE = ' '
 const contextByType = (ctxt, type) => omit(deepmerge(ctxt[DEFAULT_CONTEXT], ctxt[type]), 'query')
 const isFunction = (fnc) => !!(fnc && fnc.constructor && fnc.call && fnc.apply)
 const contein = (arr, item) => arr.find(i => i === item)
-const omit = (obj, ...keys) => Object
-                                .keys(obj)
-                                .reduce((acc, k) => {
-                                  if (contein(keys, k)) { return acc }
-                                  acc[k] = obj[k]
-                                  return acc
-                                }, {})
-const reqThemePlayGround = require.context(`bundle?lazy!${__BASE_DIR__}/demo`, true, /^.*\/themes\/.*\.scss/)
+const omit = (obj, ...keys) =>
+  Object.keys(obj)
+    .reduce((acc, k) => {
+      if (contein(keys, k)) { return acc }
+      acc[k] = obj[k]
+      return acc
+    }, {})
+
+const themesFor = ({category, component}) =>
+  reqThemePlayGround.keys()
+    .filter(p => p.includes(`${category}/${component}`))
+    .map(p => p.replace(`./${category}/${component}/themes/`, ''))
+    .map(p => p.replace('.scss', ''))
+
+const reqThemePlayGround = require.context(`!css-content!css!sass!${__BASE_DIR__}/demo`, true, /^.*\/themes\/.*\.scss/)
+const reqComponentsSCSS = require.context(`!css-content!css!sass!${__BASE_DIR__}/components`, true, /^\.\/\w+\/\w+\/src\/index\.scss/)
 
 export default class Demo extends React.Component {
-  static bootstrapWith (demo, {category, component}, {theme = false}) {
-    tryRequire({category, component, theme}).then(([Component, playground, ctxt, routes]) => {
+  static bootstrapWith (demo, {category, component}) {
+    tryRequire({category, component}).then(([Component, playground, ctxt, routes]) => {
       if (routes) { compilePattern(routes.pattern) }
       if (isFunction(ctxt)) {
         return ctxt().then(context => {
@@ -75,35 +84,39 @@ export default class Demo extends React.Component {
       ctxtType: 'default',
       ctxtSelectedIndex: 0,
       themes: [],
+      theme: 'default',
+      themeSelectedIndex: -1,
       routes: false,
       codeOpen: false
     }
   }
 
   componentDidMount () {
-    const {category, component} = this.props.params
-    const themes = reqThemePlayGround.keys()
-                                     .filter(p => p.includes(`${category}/${component}`))
-                                     .map(p => p.replace(`./${category}/${component}/themes/`, ''))
-                                     .map(p => p.replace('.scss', ''))
+    const themes = themesFor(this.props.params)
     this.setState({themes})
     Demo.bootstrapWith(this, this.props.params, this.props.location.query)
   }
 
   componentWillReceiveProps (nextProps) {
-    const {category, component} = nextProps.params
-    const themes = reqThemePlayGround.keys()
-                                     .filter(p => p.includes(`${category}/${component}`))
-                                     .map(p => p.replace(`./${category}/${component}/themes/`, ''))
-                                     .map(p => p.replace('.scss', ''))
+    const themes = themesFor(nextProps.params)
     this.setState({themes})
     Demo.bootstrapWith(this, nextProps.params, nextProps.location.query)
   }
 
   render () {
     const {category, component} = this.props.params
-    const {theme = 'default'} = this.props.location.query
-    let {Component, playground, ctxt, ctxtType, ctxtSelectedIndex, routes, themes, codeOpen} = this.state
+    let {
+      Component,
+      codeOpen,
+      ctxt,
+      ctxtSelectedIndex,
+      ctxtType,
+      playground,
+      routes,
+      theme,
+      themeSelectedIndex,
+      themes
+    } = this.state
     if (Component.contextTypes && ctxt) {
       Component = contextify(Component.contextTypes, contextByType(ctxt, ctxtType))(Component)
     }
@@ -120,8 +133,29 @@ export default class Demo extends React.Component {
     const codeClassName = cx('SUIStudioDemo-code', {
       'is-open': codeOpen
     })
+
+    let style
+    require.ensure([], () => {
+      try {
+        if (theme === 'default') {
+          style = reqComponentsSCSS(`./${category}/${component}/src/index.scss`)
+          console.groupCollapsed()
+          console.info(`ADD styles ./${category}/${component}/src/index.scss`)
+          console.log(style)
+          console.groupEnd()
+        } else {
+          style = reqThemePlayGround(`./${category}/${component}/themes/${theme}.scss`)
+          console.groupCollapsed()
+          console.info(`ADD styles ./${category}/${component}/themes/${theme}.scss`)
+          console.log(style)
+          console.groupEnd()
+        }
+      } catch (e) { console.warn(`No styles for ${category}/${component}`) }
+    })
+
     return (
       <div className='SUIStudioDemo'>
+        <Style>{style}</Style>
         <button className='SUIStudioDemo-codeButton' onClick={this.handleCode.bind(this)}>{'< />'}</button>
         <div className={codeClassName}>
           <Codemirror
@@ -135,8 +169,11 @@ export default class Demo extends React.Component {
             ctxt={ctxt}
             selected={ctxtSelectedIndex}
             onContextChange={this.handleContextChange.bind(this)} />
+          <ThemesButtons
+            themes={themes}
+            selected={themeSelectedIndex}
+            onThemeChange={this.handleThemeChange.bind(this)} />
           <RoutesButtons routes={routes} category={category} component={component} />
-          <ThemesButtons themes={themes} category={category} component={component} selected={theme}/>
         </div>
         <div className='SUIStudioDemo-preview'>
           <Preview
@@ -157,6 +194,13 @@ export default class Demo extends React.Component {
       ctxtType,
       ctxtSelectedIndex: index,
       playground: this.state.playground + EVIL_HACK_TO_RERENDER_AFTER_CHANGE
+    })
+  }
+
+  handleThemeChange (theme, index) {
+    this.setState({
+      theme,
+      themeSelectedIndex: index
     })
   }
 

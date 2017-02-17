@@ -1,33 +1,30 @@
-import Link from 'react-router/lib/Link'
 import React from 'react'
 import cx from 'classnames'
 
-const ThemesButtons = ({themes, category, component, selected}) => {
+const ThemesButtons = ({themes, onThemeChange, selected}) => {
   if (themes.length === 0) { return null }
   const className = cx('SUIStudioThemesButtons-theme', {
-    'is-current': selected === 'default'
+    'is-current': selected === -1
   })
   return (
     <div className='SUIStudioThemesButtons'>
       <p className='SUIStudioThemesButtons-title'>Themes:</p>
-      <a className='SUIStudioThemesButtons-link' href={`/workbench/${category}/${component}/demo`}>
-        <button className={className}>Default</button>
-      </a>
-    {
-      themes.map(
-        (theme, index) => {
-          const to = `/workbench/${category}/${component}/demo?theme=${theme}`
-          const className = cx('SUIStudioThemesButtons-theme', {
-            'is-current': selected === theme
-          })
-          return (
-            <a className='SUIStudioThemesButtons-link' key={index} href={to}>
-              <button className={className}>{theme}</button>
-            </a>
-          )
-        }
-      )
-    }
+      <button className={className} onClick={(evt) => onThemeChange('default', -1)}>default</button>
+      {
+        themes.map(
+          (theme, index) => {
+            const className = cx('SUIStudioThemesButtons-theme', {
+              'is-current': selected === index
+            })
+            return (
+              <button
+                className={className}
+                key={index}
+                onClick={(evt) => onThemeChange(theme, index)}>{theme}</button>
+            )
+          }
+        )
+      }
     </div>
   )
 }
