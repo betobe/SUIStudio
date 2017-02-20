@@ -25,6 +25,7 @@ export default class Style extends Component {
     const oldSrc = this._linkElement.href
     this._linkElement.href = window.URL.createObjectURL(blob)
     oldSrc && window.URL.createObjectURL(blob)
+
     return null
   }
 }
