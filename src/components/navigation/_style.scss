@@ -6,10 +6,8 @@
   display: flex;
   flex-direction: column;
   overflow: auto;
-  position: fixed;
   top: 0;
   width: 80vw;
-  z-index: 100;
 
   @media (min-width: map-get($breakpoints, 's')) {
     width: 300px;
