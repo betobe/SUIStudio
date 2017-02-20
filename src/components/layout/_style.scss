@@ -11,7 +11,7 @@
 
   &-sidebar {
     @extend %layout-fixed;
-    background-color: $c-gray-lightest;
+    background-color: $c-sidebar-background;
     box-sizing: border-box;
     flex: 0 1 210px;
     z-index: 100;
@@ -30,6 +30,7 @@
 
   &-header {
     background: $c-header-background;
+    color: #fff;
     padding: 1.25em 4em;
   }
 }

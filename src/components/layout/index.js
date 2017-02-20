@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
-
-import Navigation from './components/navigation'
+import Navigation from '../navigation'
 
 const readme = require(`raw!${__BASE_DIR__}/components/README.md`)
 
@@ -11,7 +10,6 @@ export default class Layout extends React.Component {
     super(props, context)
 
     this.handleClick = this.handleClick.bind(this)
-
     this.state = {open: false}
   }
 
@@ -31,8 +29,7 @@ export default class Layout extends React.Component {
         </div>
         <div className='SUIStudio-main'>
           {
-            children !== null ? children
-                              : this._mainReadme
+            children !== null ? children : this._mainReadme
           }
         </div>
       </div>
