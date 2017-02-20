@@ -1,24 +1,31 @@
-$c-sidebar-background: #add8e6;
-$c-header-background: #d3d3d3;
+%layout-fixed {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  overflow: auto;
+}
 
 .SUIStudio {
   display: flex;
   height: 100vh;
 
   &-sidebar {
-    background-color: $c-sidebar-background;
+    @extend %layout-fixed;
+    background-color: $c-gray-lightest;
     box-sizing: border-box;
     flex: 0 1 210px;
-    padding: 2em;
+    z-index: 100;
   }
 
   &-main {
+    @extend %layout-fixed;
     background-color: #fff;
     flex: 1;
     height: 100%;
     overflow: hidden;
     transition: transform .250s ease;
     z-index: 101;
+    width: 100%;
   }
 
   &-header {
