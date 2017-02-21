@@ -4,15 +4,13 @@ import { AppContainer } from 'react-hot-loader'
 
 import Root from './components/root'
 
-const render = Component => {
-  console.dir(Component)
+const render = Component =>
   reactDOM.render(
     <AppContainer>
       <Root />
     </AppContainer>,
     document.getElementById('root')
   )
-}
 render(Root)
 
 if (process.env.NODE_ENV === 'development' && module.hot) {

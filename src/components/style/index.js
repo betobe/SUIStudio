@@ -9,8 +9,8 @@ const createLinkElement = () => {
 }
 
 export default class Style extends Component {
-  propTypes = {
-    children: PropTypes.string.isRequired
+  static propTypes = {
+    children: PropTypes.string
   }
 
   constructor (props, ctxt) {
