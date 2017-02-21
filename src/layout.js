@@ -26,7 +26,9 @@ export default class Layout extends React.Component {
       <div className='SUIStudio'>
         <input className='SUIStudioNav-toggle' type='checkbox' id='drawer-toggle' checked={open} onChange={this.handleClick} name='drawer-toggle' />
         <label className='SUIStudioNav-icon' htmlFor='drawer-toggle' id='drawer-toggle-label'></label>
-        <Navigation handleClick={this.handleClick} />
+        <div  className="SUIStudio-sidebar">
+          <Navigation handleClick={this.handleClick} />
+        </div>
         <div className='SUIStudio-main'>
           {
             children !== null ? children
