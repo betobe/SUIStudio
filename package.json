@@ -55,7 +55,7 @@
     ]
   },
   "dependencies": {
-    "@schibstedspain/suistudio-fatigue-dev": "github:SUI-Components/suistudio-fatigue-dev#5bdc72a",
+    "@schibstedspain/suistudio-fatigue-dev": "github:SUI-Components/suistudio-fatigue-dev#6c9267d",
     "babel-standalone": "6.12.0",
     "bundle-loader": "0.5.4",
     "codemirror": "5.16.0",
