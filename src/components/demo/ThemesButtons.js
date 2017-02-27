@@ -3,32 +3,39 @@ import cx from 'classnames'
 
 const ThemesButtons = ({themes, onThemeChange, selected}) => {
   if (themes.length === 0) { return null }
-  const className = cx('SUIStudioThemesButtons-theme', {
-    'is-current': selected === -1
+  const className = cx('sui-StudioTabs-link', {
+    'sui-StudioTabs-link--active': selected === -1
   })
   return (
-    <div className='SUIStudioThemesButtons'>
-      <p className='SUIStudioThemesButtons-title'>Themes:</p>
-      <button className={className} onClick={(evt) => onThemeChange('default', -1)}>default</button>
-      {
-        themes.map(
-          (theme, index) => {
-            const className = cx('SUIStudioThemesButtons-theme', {
-              'is-current': selected === index
-            })
-            return (
-              <button
-                className={className}
-                key={index}
-                onClick={(evt) => onThemeChange(theme, index)}>{theme}</button>
-            )
-          }
-        )
-      }
+    <div className='sui-StudioThemesButtons'>
+      <ul className='sui-StudioContextButtons-buttons sui-StudioTabs sui-StudioTabs--horizontal'>
+        <li className='sui-StudioTabs-title'>
+          <span className='sui-StudioTabs-titleLink'>Theme</span>
+        </li>
+        <li className='sui-StudioTabs-tab'>
+          <button className={className} onClick={(evt) => onThemeChange('default', -1)}>default</button>
+        </li>
+        {
+          themes.map(
+            (theme, index) => {
+              const className = cx('sui-StudioTabs-link', {
+                'sui-StudioTabs-link--active': selected === index
+              })
+              return (
+                <li className='sui-StudioTabs-tab'>
+                  <button
+                    className={className}
+                    key={index}
+                    onClick={(evt) => onThemeChange(theme, index)}>{theme}</button>
+                </li>
+              )
+            }
+          )
+        }
+      </ul>
     </div>
   )
 }
 
 ThemesButtons.displayName = 'ThemesButtons'
 export default ThemesButtons
-

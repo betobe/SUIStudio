@@ -1,7 +1,7 @@
 import React from 'react'
 import {Route, IndexRoute, Redirect} from 'react-router'
 
-import Layout from './layout'
+import Layout from './components/layout'
 import Workbench from './components/workbench'
 import Demo from './components/demo'
 import Tests from './components/tests'
