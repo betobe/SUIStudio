@@ -9,22 +9,29 @@ const isEmptyObject = obj => {
 const ContextButtons = ({ctxt, onContextChange, selected}) => {
   if (isEmptyObject(ctxt)) { return null }
   return (
-    <div className='SUIStudioContextButtons'>
-      <p className='SUIStudioContextButtons-title'>Contexts:</p>
-      {
-        Object.keys(ctxt).map(
-          (ctxtType, index) => {
-            const className = cx('SUIStudioContextButtons-context', {
-              'is-current': selected === index
+    <div className='sui-StudioContextButtons'>
+
+      <ul className='sui-StudioContextButtons-buttons sui-StudioTabs sui-StudioTabs--horizontal'>
+        <li className='sui-StudioTabs-title'>
+          <span className='sui-StudioTabs-titleLink'>Context</span>
+        </li>
+        {
+          Object.keys(ctxt).map(
+            (ctxtType, index) => {
+              const className = cx('sui-StudioTabs-link', {
+                'sui-StudioTabs-link--active': selected === index
+              })
+              return (
+                <li className='sui-StudioTabs-tab'>
+                  <button
+                    className={className}
+                    key={index}
+                    onClick={(evt) => onContextChange(ctxtType, index)}>{ctxtType}</button>
+                </li>
+              )
             })
-            return (
-              <button
-                className={className}
-                key={index}
-                onClick={(evt) => onContextChange(ctxtType, index)}>{ctxtType}</button>
-            )
-          })
-      }
+        }
+      </ul>
     </div>
   )
 }

@@ -1,23 +1,25 @@
-.SUIStudioDemo {
+
+
+.sui-StudioDemo {
+  $w-code-button: 30px;
+
   display: flex;
   flex: 1;
   flex-direction: column;
 
   &-codeButton {
-    background-color: $c-primary;
-    border: 0;
+    background: $c-white;
+    border: 2px solid $c-white;
     border-radius: 100%;
-    color: #fff;
-    cursor: hand;
-    height: 50px;
-    line-height: 50px;
-    outline:none;
-    position: fixed;
-    right: 20px;
-    text-align: center;
-    top: 40px;
-    width: 50px;
-    z-index: 101;
+    margin-top: -$w-code-button/2;
+    position: absolute;
+    right: $p-base;
+    width: $w-code-button;
+    z-index: 1;
+
+    path {
+      fill: $c-primary;
+    }
   }
 
   &-code {
@@ -25,14 +27,9 @@
     overflow: hidden;
     transition: height 250ms;
 
-    &.is-open {
+    &--open {
       height: 300px;
     }
-  }
-
-  &-buttons {
-    border-bottom: 1px solid $c-gray-light;
-    padding: 20px 20px 10px;
   }
 
   &-preview {
@@ -40,58 +37,6 @@
     flex: 1;
     justify-content: center;
     overflow-y: auto;
-    padding: 2em;
-  }
-
-  &-code {}
-}
-
-.SUIStudioContextButtons {
-  &-context {
-    appearance: none;
-    background-color: transparent;
-    border: 1px solid $c-primary;
-    color: $c-primary;
-    cursor: pointer;
-    line-height: 30px;
-    margin-right: 20px;
-    outline: none;
-    padding: 0 10px;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    text-align: center;
-    width: auto;
-    white-space: nowrap;
-
-    &:hover,
-    &.is-current {
-      background-color: $c-primary;
-      color: #fff;
-    }
-  }
-}
-
-.SUIStudioThemesButtons {
-  padding-top: 5px;
-
-  &-theme {
-    appearance: none;
-    background-color: transparent;
-    border: 1px solid $c-primary;
-    color: $c-primary;
-    cursor: pointer;
-    line-height: 30px;
-    margin-right: 20px;
-    outline: none;
-    padding: 0 10px;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    text-align: center;
-    width: auto;
-    white-space: nowrap;
-
-    &:hover,
-    &.is-current {
-      background-color: $c-primary;
-      color: #fff;
-    }
+    padding: $p-base;
   }
 }

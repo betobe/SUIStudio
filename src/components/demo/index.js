@@ -122,8 +122,8 @@ export default class Demo extends React.Component {
     HOCComponent.displayName = Component.displayName
     /* END Black Magic */
 
-    const codeClassName = cx('SUIStudioDemo-code', {
-      'is-open': codeOpen
+    const codeClassName = cx('sui-StudioDemo-code', {
+      'sui-StudioDemo-code--open': codeOpen
     })
 
     let style
@@ -146,17 +146,9 @@ export default class Demo extends React.Component {
     })
 
     return (
-      <div className='SUIStudioDemo'>
+      <div className='sui-StudioDemo'>
         <Style>{style}</Style>
-        <button className='SUIStudioDemo-codeButton' onClick={this.handleCode.bind(this)}>{'< />'}</button>
-        <div className={codeClassName}>
-          <Codemirror
-            value={playground}
-            onChange={(playground) => this.setState({playground})}
-            options={{mode: 'javascript', lineNumbers: true, theme: 'material'}}
-          />
-        </div>
-        <div className='SUIStudioDemo-buttons'>
+        <div className='sui-StudioNavBar-secondary'>
           <ContextButtons
             ctxt={ctxt}
             selected={ctxtSelectedIndex}
@@ -167,7 +159,19 @@ export default class Demo extends React.Component {
             onThemeChange={this.handleThemeChange.bind(this)} />
           <RoutesButtons routes={routes} category={category} component={component} />
         </div>
-        <div className='SUIStudioDemo-preview'>
+        <div className='sui-StudioDemo-codeButton' onClick={this.handleCode.bind(this)}>
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
+            <path d='M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1 10.199l-3.64 1.801 3.64 1.796v2.204l-6-2.935v-2.131l6-2.934v2.199zm8 2.866l-6 2.935v-2.204l3.64-1.796-3.64-1.801v-2.199l6 2.935v2.13z' />
+          </svg>
+        </div>
+        <div className={codeClassName}>
+          <Codemirror
+            value={playground}
+            onChange={(playground) => this.setState({playground})}
+            options={{mode: 'javascript', lineNumbers: true, theme: 'material'}}
+          />
+        </div>
+        <div className='sui-StudioDemo-preview'>
           <Preview
             code={playground}
             scope={{React, [`${Component.displayName || Component.name}`]: HOCComponent}}

@@ -15,7 +15,7 @@ class Markdown extends React.Component {
 
   render () {
     const {readme} = this.state
-    return readme && <ReactMarkdown source={readme} />
+    return readme && <ReactMarkdown className='sui-StudioMarkdown-body markdown-body' source={readme} />
   }
 }
 

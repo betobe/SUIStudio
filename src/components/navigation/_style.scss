@@ -1,97 +1,34 @@
-.SUIStudioNav {
-  align-items: center;
-  background-color: $c-gray-lightest;
-  border-right: 1px solid darken($c-gray-lightest, 10%);
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-  top: 0;
-  width: 80vw;
-
-  @media (min-width: map-get($breakpoints, 's')) {
-    width: 300px;
-  }
-
-  &-toggle {
-    opacity: 0;
-    position: absolute;
-
-    &:checked ~ .SUIStudioNav-icon,
-    &:checked ~ .SUIStudio-main {
-      transform: translateX(80vw);
-      @media (min-width: map-get($breakpoints, 's')) {
-        transform: translateX(300px);
-      }
-    }
-
-    &:checked ~ .SUIStudioNav-icon {
-      height: 100vh;
-      width: 20vw;
-      @media (min-width: map-get($breakpoints, 's')) {
-        width: calc(100vw - 300px);
-      }
-    }
-  }
-
-  &-icon {
-    background: rgba(255, 255, 255, 0);
-    display: block;
-    height: 50px;
-    left: 0;
-    position: fixed;
-    transition: transform .250s ease;
-    user-select: none;
-    width: 50px;
-    z-index: 110;
-
-    &:before {
-      background: $c-gray;
-      box-shadow: 0 6px 0 $c-gray, 0 12px 0 $c-gray;
-      content: "";
-      display: block;
-      height: 2px;
-      left: 13px;
-      position: absolute;
-      top: 18px;
-      width: 24px;
-    }
-  }
+.sui-StudioNav {
+  background: $bgc-navbar;
+  display: block;
+  font-size: $fz-m;
 
   &-logo {
-    margin: 20px;
-  }
-
-  &-search {
-    border-bottom: 1px solid darken($c-gray-lightest, 10%);
-    width: 100%;
+    margin: $p-base auto;
+    max-width: 100px;
+    width: 50%;
   }
 
   &-searchInput {
-    border: none;
-    color: $c-gray-light;
-    font-size: 1.2em;
+    @include icon-search($fgc-navbar);
+    background-color: $bgc-navbar-secondary;
+    background-position: 15px;
+    background-size: auto 1em;
+    border: 0;
+    border-left: 2px solid $c-primary;
+    box-sizing: border-box;
+    color: $fgc-navbar--active;
+    cursor: pointer;
+    line-height: $w-sidebar-collapsed;
+    margin-top: 2px;
     outline: none;
-    padding: 10px 20px;
+    padding: 0;
+    padding-left: $w-sidebar-collapsed;
     width: 100%;
-  }
 
-  &-list {
-    list-style-type: none;
-    padding: 0 20px;
-    width: 100%;
-  }
-
-  &-link {
-    color: $c-gray;
-    text-decoration: none;
-    font-size: $fz-l;
-    line-height: $lh-save-tab;
-    display: block;
-    margin-bottom: $m-base;
-
-    &:hover {
-      color: $c-gray-dark;
+    &:focus {
+      @include icon-search($c-white);
+      border-left-color: $c-white;
     }
   }
 }
