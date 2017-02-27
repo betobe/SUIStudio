@@ -1,36 +1,135 @@
-%layout-fixed {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  overflow: auto;
+
+/**
+ * Style for sidebar when compacted
+ */
+@mixin sui-studio-sidebar--min {
+  width: $w-sidebar-collapsed;
+
+  .sui-StudioTabs-link {
+    @include icon-circle($fgc-navbar);
+    background-position: center;
+    background-size: 20%;
+    text-indent: -9999px;
+    width: $w-sidebar-collapsed;
+
+    &--active {
+      @include icon-circle($c-white);
+    }
+  }
 }
 
-.SUIStudio {
+/**
+ * Style for sidebar when open
+ */
+@mixin sui-studio-sidebar--max {
+
+  &,
+  .sui-StudioTabs-link {
+    width: $w-sidebar;
+  }
+
+  .sui-StudioTabs-link {
+    background-image: none;
+    text-indent: 0;
+  }
+
+  .sui-Studio-navIcon {
+    @include icon-pin($fgc-navbar);
+  }
+
+  @media (min-width: map-get($breakpoints, 'm')) {
+    &,
+    .sui-StudioTabs-link {
+      width: $w-sidebar-m-up;
+    }
+
+  }
+}
+
+.sui-Studio {
   display: flex;
   height: 100vh;
 
-  &-sidebar {
-    @extend %layout-fixed;
-    background-color: $c-sidebar-background;
-    box-sizing: border-box;
-    flex: 0 1 210px;
-    z-index: 100;
-  }
-
-  &-main {
-    @extend %layout-fixed;
-    background-color: #fff;
-    flex: 1;
-    height: 100%;
-    overflow: hidden;
-    transition: transform .250s ease;
-    z-index: 101;
-    width: 100%;
+  &-navIcon {
+    @include icon-menu($fgc-navbar);
+    background-position: center;
+    background-size: 40%;
+    display: block;
+    height: $w-sidebar-collapsed;
+    width: $w-sidebar-collapsed;
   }
 
   &-header {
-    background: $c-header-background;
-    color: #fff;
+    background: $bgc-navbar;
+    color: $fgc-navbar--active;
     padding: 1.25em 4em;
+  }
+
+  &-sidebar {
+    box-sizing: border-box;
+    width: $w-sidebar-collapsed;
+    z-index: 10;
+
+    &Body {
+      @include sui-studio-sidebar--min;
+      background-color: $bgc-navbar;
+      border-right: 2px solid $c-white;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      transition: width .25s ease-out;
+    }
+
+    &--hover,
+    &--fixed {
+      .sui-Studio-sidebarBody {
+        @include sui-studio-sidebar--max;
+      }
+    }
+
+    &--fixed {
+      width: $w-sidebar;
+
+      .sui-Studio-sidebarBody {
+        .sui-Studio-navIcon {
+          @include icon-pin($c-white);
+          background-color: $c-primary;
+        }
+      }
+    }
+
+    @media (min-width: map-get($breakpoints, 'm')) {
+      &Body,
+      &--fixed {
+        max-width: 250px;
+      }
+
+      &--fixed {
+        width: $w-sidebar-m-up;
+      }
+    }
+  }
+
+  &-main {
+    background-color: $bgc-main;
+    height: 100%;
+    width: 100%;
+  }
+
+  &-toggle {
+    opacity: 0;
+    position: absolute;
+  }
+
+  .sui-StudioNavBar-secondary {
+    background: $bgc-navbar-secondary;
+    display: flex;
+    flex-direction: row;
+    font-size: 80%;
+    padding: 1em 1.5em;
+
+    .sui-StudioTabs {
+      padding-right: $p-base;
+    }
   }
 }

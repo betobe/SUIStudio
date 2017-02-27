@@ -85,9 +85,9 @@ const Preview = React.createClass({
 
   render () {
     return (
-      <div className='SUIStudioPreview'>
-        {this.state.error !== null ? <span className='SUIStudioPreview-error'>{this.state.error}</span> : null}
-        <div ref='mount' className='SUIStudioPreview-content' />
+      <div className='sui-StudioPreview'>
+        {this.state.error !== null ? <span className='sui-StudioPreview-error'>{this.state.error}</span> : null}
+        <div ref='mount' className='sui-StudioPreview-content' />
       </div>
     )
   }

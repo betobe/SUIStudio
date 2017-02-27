@@ -6,18 +6,26 @@ export default class Documentation extends React.Component {
     const {category, component} = this.props.params
 
     return (
-      <div className='SUIStudioDocumentation'>
-        <nav className='SUIStudioDocumentation-navigation'>
-          <ul className='SUIStudioDocumentation-navContainer'>
-            <li className='SUIStudioDocumentation-link'>
-              <Link to={`/workbench/${category}/${component}/documentation/generate`}>Generate</Link>
+      <div className='sui-StudioDocumentation'>
+        <nav className='sui-StudioNavBar-secondary'>
+          <ul className=' sui-StudioTabs sui-StudioTabs--horizontal'>
+            <li className='sui-StudioTabs-tab'>
+              <Link
+                to={`/workbench/${category}/${component}/documentation/generate`}
+                className='sui-StudioTabs-link'
+                activeClassName='sui-StudioTabs-link--active'
+              >Generated</Link>
             </li>
-            <li className='SUIStudioDocumentation-link'>
-              <Link to={`/workbench/${category}/${component}/documentation/readme`}>Readme</Link>
+            <li className='sui-StudioTabs-tab'>
+              <Link
+                to={`/workbench/${category}/${component}/documentation/readme`}
+                className='sui-StudioTabs-link'
+                activeClassName='sui-StudioTabs-link--active'
+              >Readme</Link>
             </li>
           </ul>
         </nav>
-        <div className='SUIStudioDocumentation-content'>{this.props.children}</div>
+        <div className='sui-StudioDocumentation-content'>{this.props.children}</div>
       </div>
     )
   }

@@ -4,22 +4,26 @@ import {Link} from 'react-router'
 export default class Workbench extends React.Component {
   render () {
     const {category, component} = this.props.params
+    const TAB_CLASS = 'sui-StudioTabs-tab'
+    const LINK_CLASS = 'sui-StudioTabs-link'
+    const ACTIVE_CLASS = LINK_CLASS + '--active'
+
     return (
-      <div className='SUIStudioWorkbench'>
-        <nav className='SUIStudioWorkbench-navigation'>
-          <ul className='SUIStudioWorkbench-navContainer'>
-            <li className='SUIStudioWorkbench-linkWrapper'>
-              <Link className='SUIStudioWorkbench-link' to={`/workbench/${category}/${component}/demo`}>Demo</Link>
+      <div className='sui-StudioWorkbench'>
+        <nav className='sui-StudioWorkbench-navigation'>
+          <ul className='sui-StudioTabs sui-StudioTabs--horizontal'>
+            <li className={TAB_CLASS}>
+              <Link to={`/workbench/${category}/${component}/demo`} className={LINK_CLASS} activeClassName={ACTIVE_CLASS} >Demo</Link>
             </li>
-            <li className='SUIStudioWorkbench-linkWrapper'>
-              <Link className='SUIStudioWorkbench-link' to={`/workbench/${category}/${component}/documentation`}>Documentation</Link>
+            <li className={TAB_CLASS}>
+              <Link to={`/workbench/${category}/${component}/documentation`} className={LINK_CLASS} activeClassName={ACTIVE_CLASS} >Documentation</Link>
             </li>
-            <li className='SUIStudioWorkbench-linkWrapper'>
-              <Link className='SUIStudioWorkbench-link' to={`/workbench/${category}/${component}/tests`}>Tests</Link>
+            <li className={TAB_CLASS}>
+              <Link to={`/workbench/${category}/${component}/tests`} className={LINK_CLASS} activeClassName={ACTIVE_CLASS} >Tests</Link>
             </li>
           </ul>
         </nav>
-        <div className='SUIStudioWorkbench-content'>{this.props.children}</div>
+        <div className='sui-StudioWorkbench-content'>{this.props.children}</div>
       </div>
     )
   }

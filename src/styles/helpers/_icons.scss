@@ -1,0 +1,24 @@
+@mixin icon-as-bg ($icon) {
+  background-image: $icon;
+  background-repeat: no-repeat;
+}
+
+@mixin icon-menu ($color: $c-white) {
+  $icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#{$color}" d="M24 6h-24v-4h24v4zm0 4h-24v4h24v-4zm0 8h-24v4h24v-4z"/></svg>');
+  @include icon-as-bg($icon)
+}
+
+@mixin icon-search ($color: $c-white) {
+  $icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#{$color}" d="M21.172 24l-7.387-7.387c-1.388.874-3.024 1.387-4.785 1.387-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9c0 1.761-.514 3.398-1.387 4.785l7.387 7.387-2.828 2.828zm-12.172-8c3.859 0 7-3.14 7-7s-3.141-7-7-7-7 3.14-7 7 3.141 7 7 7z"/></svg>');
+  @include icon-as-bg($icon)
+}
+
+@mixin icon-circle ($color: $c-white) {
+  $icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle fill="#{$color}" cx="12" cy="12" r="12"/></svg>');
+  @include icon-as-bg($icon)
+}
+
+@mixin icon-pin ($color: $c-white) {
+  $icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#{$color}" d="M11 17h2v5l-2 2v-7zm3.571-12c0-2.903 2.36-3.089 2.429-5h-10c.068 1.911 2.429 2.097 2.429 5 0 3.771-3.429 3.291-3.429 10h12c0-6.709-3.429-6.229-3.429-10z"/></svg>');
+  @include icon-as-bg($icon)
+}

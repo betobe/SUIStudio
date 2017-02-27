@@ -3,14 +3,14 @@ import React from 'react'
 
 const RoutesButtons = ({routes, category, component}) => {
   return (
-    <div className='SUIStudioRoutesButtons'>
+    <div className='sui-StudioRoutesButtons'>
     {
       Object.keys(routes)
             .filter(key => key !== 'pattern')
             .map(
               (route, index) => {
                 const to = `/workbench/${category}/${component}/demo${routes[route]}`
-                return <Link className='SUIStudioRoutesButtons-link' key={index} to={to}>{route}</Link>
+                return <Link className='sui-StudioRoutesButtons-link' key={index} to={to}>{route}</Link>
               }
             )
     }
