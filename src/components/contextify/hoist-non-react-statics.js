@@ -26,7 +26,7 @@ var KNOWN_STATICS = {
   arity: true
 }
 
-module.exports = function hoistNonReactStatics (targetComponent, sourceComponent, customStatics) {
+function hoistNonReactStatics (targetComponent, sourceComponent, customStatics) {
   if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
     var keys = Object.getOwnPropertyNames(sourceComponent)
     for (var i = 0; i < keys.length; ++i) {
@@ -42,3 +42,5 @@ module.exports = function hoistNonReactStatics (targetComponent, sourceComponent
 
   return targetComponent
 }
+
+export default hoistNonReactStatics

@@ -1,8 +1,11 @@
-const tryRequire = ({category, component}) => {
-  const reqComponentsReadme = require.context(`bundle?lazy!raw!${__BASE_DIR__}/components`, true, /^\.\/\w+\/\w+\/README\.md?/)
-  // https://webpack.github.io/docs/loaders.html#loader-order
-  const reqComponentsSrc = require.context(`!!bundle?lazy!raw!${__BASE_DIR__}/components`, true, /^\.\/\w+\/\w+\/src\/index\.jsx?/)
+const reqComponentsReadme =
+  require.context(`bundle-loader?lazy!raw-loader!${__BASE_DIR__}/components`, true, /^\.\/\w+\/\w+\/README\.md?/)
 
+// https://webpack.github.io/docs/loaders.html#loader-order
+const reqComponentsSrc =
+  require.context(`!!bundle-loader?lazy!raw-loader!${__BASE_DIR__}/components`, true, /^\.\/\w+\/\w+\/src\/index\.jsx?/)
+
+const tryRequire = ({category, component}) => {
   const src = new Promise(resolve => {
     require.ensure([], () => {
       let bundler
