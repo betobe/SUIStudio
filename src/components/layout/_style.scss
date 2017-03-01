@@ -113,7 +113,7 @@
   &-main {
     background-color: $bgc-main;
     height: 100%;
-    width: 100%;
+    width: calc(100% - #{$w-sidebar-collapsed});
   }
 
   &-toggle {
