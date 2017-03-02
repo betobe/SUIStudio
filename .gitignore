@@ -8,3 +8,4 @@ public
 .eslintrc
 .sass-lint.yml
 .scss-lint.yml
+.nvmrc
