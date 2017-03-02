@@ -6,8 +6,8 @@ const pascalCase = require('pascal-case')
 program
   .option('-R, --router', 'add routering for this component')
   .option('-C, --context', 'add context for this component')
-  .option('-P, --prefix', 'add prefix for this component')
-  .option('-S, --scope', 'add scope for this component')
+  .option('-P, --prefix <prefix>', 'add prefix for this component')
+  .option('-S, --scope <scope>', 'add scope for this component')
   .on('--help', () => {
     console.log('  Examples:')
     console.log('')
@@ -23,10 +23,6 @@ program
 
 const BASE_DIR = process.cwd()
 const [category, component] = program.args
-const componentInPascal = pascalCase(`${category.replace(/s$/, '')} ${component}`)
-const {router, context, prefix = 'sui'} = program
-let {scope} = program
-scope = scope === undefined ? '' : `@${scope}/`
 
 const showError = (msg) => {
   program.outputHelp(txt => colors.red(txt))
@@ -35,17 +31,22 @@ const showError = (msg) => {
 }
 
 if (!component) { showError('component must be defined') }
+if (!category) { showError('category must be defined') }
 
-const COMPONENT_ENTRY_JS_POINT_FILE = `${BASE_DIR}/components/${category}/${component}/src/index.js`
-const COMPONENT_PACKAGE_JSON_FILE = `${BASE_DIR}/components/${category}/${component}/package.json`
-const COMPONENT_PACKAGE_GITIGNORE_FILE = `${BASE_DIR}/components/${category}/${component}/.gitignore`
-const COMPONENT_PACKAGE_NPMIGNORE_FILE = `${BASE_DIR}/components/${category}/${component}/.npmignore`
-const COMPONENT_ENTRY_SCSS_POINT_FILE = `${BASE_DIR}/components/${category}/${component}/src/index.scss`
-const COMPONENT_README_FILE = `${BASE_DIR}/components/${category}/${component}/README.md`
+const componentInPascal = pascalCase(`${category.replace(/s$/, '')} ${component}`)
 
-const COMPONENT_PLAYGROUND_FILE = `${BASE_DIR}/demo/${category}/${component}/playground`
-const COMPONENT_CONTEXT_FILE = `${BASE_DIR}/demo/${category}/${component}/context.js`
-const COMPONENT_ROUTES_FILE = `${BASE_DIR}/demo/${category}/${component}/routes.js`
+const COMPONENT_DIR = `${BASE_DIR}/components/${category}/${component}/`
+const COMPONENT_ENTRY_JS_POINT_FILE = `${COMPONENT_DIR}src/index.js`
+const COMPONENT_PACKAGE_JSON_FILE = `${COMPONENT_DIR}package.json`
+const COMPONENT_PACKAGE_GITIGNORE_FILE = `${COMPONENT_DIR}.gitignore`
+const COMPONENT_PACKAGE_NPMIGNORE_FILE = `${COMPONENT_DIR}.npmignore`
+const COMPONENT_ENTRY_SCSS_POINT_FILE = `${COMPONENT_DIR}src/index.scss`
+const COMPONENT_README_FILE = `${COMPONENT_DIR}README.md`
+
+const DEMO_DIR = `${BASE_DIR}/demo/${category}/${component}/`
+const COMPONENT_PLAYGROUND_FILE = `${DEMO_DIR}playground`
+const COMPONENT_CONTEXT_FILE = `${DEMO_DIR}context.js`
+const COMPONENT_ROUTES_FILE = `${DEMO_DIR}routes.js`
 
 const COMPONENTS_LIST = `${BASE_DIR}/.COMPONENTS`
 
@@ -77,11 +78,15 @@ src
 `
 )
 
+const {context, router, scope, prefix = 'sui'} = program
+const packageScope = scope ? `@${scope}/` : ''
+const packageCategory = category ? `${category}-` : ''
+const packageName = `${packageScope}${prefix}-${packageCategory}${component}`
+
 writeFile(
 COMPONENT_PACKAGE_JSON_FILE,
-`
-{
-  "name": "${scope}${prefix}-${component}",
+`{
+  "name": "${packageName}",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
@@ -105,8 +110,7 @@ COMPONENT_PACKAGE_JSON_FILE,
 
 writeFile(
 COMPONENT_ENTRY_JS_POINT_FILE,
-`
-import React, {Component} from 'react'
+`import React, {Component} from 'react'
 
 class ${componentInPascal} extends Component {
   render () {
@@ -131,8 +135,7 @@ export default ${componentInPascal}
 
 writeFile(
 COMPONENT_ENTRY_SCSS_POINT_FILE,
-`
-@import '~@schibstedspain/theme-basic/lib/index';
+`@import '~@schibstedspain/theme-basic/lib/index';
 
 .${prefix}-${componentInPascal} {
   // Do your magic
@@ -155,8 +158,7 @@ writeFile(
 
 router && writeFile(
 COMPONENT_ROUTES_FILE,
-`
-module.exports = {
+`module.exports = {
   pattern: '/:lang',
   'default': '/es',
   'en': '/en',
@@ -167,8 +169,7 @@ module.exports = {
 
 context && writeFile(
 COMPONENT_CONTEXT_FILE,
-`
-module.exports = {
+`module.exports = {
   'default': {
     i18n: {t (s) { return s.split('').reverse().join('') }}
   }
