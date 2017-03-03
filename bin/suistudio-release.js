@@ -1,3 +1,5 @@
+/* eslint no-console:0 */
+
 const spawn = require('child_process').spawn
 const readFileSync = require('fs').readFileSync
 const BASE_DIR = process.cwd()

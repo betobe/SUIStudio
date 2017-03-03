@@ -1,7 +1,14 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import {Link} from 'react-router'
 
 export default class Documentation extends React.Component {
+  static propTypes = {
+    children: PropTypes.element,
+    params: PropTypes.shape({
+      category: PropTypes.string,
+      component: PropTypes.string
+    })
+  }
   render () {
     const {category, component} = this.props.params
 

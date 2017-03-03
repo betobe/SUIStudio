@@ -1,3 +1,5 @@
+/* eslint no-console:0 */
+
 const conventionalChangelog = require('conventional-changelog')
 const readFileSync = require('fs').readFileSync
 

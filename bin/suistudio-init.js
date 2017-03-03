@@ -1,3 +1,5 @@
+/* eslint no-console:0 */
+
 const colors = require('colors')
 const program = require('commander')
 const BASE_DIR = process.cwd()

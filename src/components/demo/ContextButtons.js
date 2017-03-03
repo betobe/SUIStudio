@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import cx from 'classnames'
 
 const isEmptyObject = obj => {
@@ -37,6 +37,12 @@ const ContextButtons = ({ctxt, onContextChange, selected}) => {
 }
 
 ContextButtons.displayName = 'ContextButtons'
+
+ContextButtons.propTypes = {
+  ctxt: PropTypes.object,
+  onContextChange: PropTypes.func,
+  selected: PropTypes.bool
+}
 
 ContextButtons.defaultProps = {
   selected: 0

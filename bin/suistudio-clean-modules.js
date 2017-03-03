@@ -1,3 +1,5 @@
+/* eslint no-console:0 */
+
 const colors = require('colors')
 const {remove, readFileSync} = require('fs-extra')
 const BASE_DIR = process.cwd()
