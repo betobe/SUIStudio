@@ -1,3 +1,5 @@
+/* global __BASE_DIR__ */
+
 const reqComponentsReadme =
   require.context(`bundle-loader?lazy!raw-loader!${__BASE_DIR__}/components`, true, /^\.\/\w+\/\w+\/README\.md?/)
 

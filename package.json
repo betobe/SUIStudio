@@ -10,8 +10,10 @@
   "scripts": {
     "phoenix": "rm -Rf node_modules && npm it",
     "co": "git-cz",
-    "lint": "standard",
-    "up": "updtr --test-stdout --save-exact"
+    "up": "updtr --test-stdout --save-exact",
+    "lint:js": "linting-rules js",
+    "lint:sass": "linting-rules sass",
+    "lint": "npm run lint:js && npm run lint:sass"
   },
   "repository": {
     "type": "git",
@@ -28,34 +30,16 @@
     "url": "https://github.com/SUI-Components/SUIStudio/issues"
   },
   "homepage": "https://github.com/SUI-Components/SUIStudio#readme",
-  "devDependencies": {
-    "commitizen": "2.8.2",
-    "cross-env": "2.0.0",
-    "cz-conventional-changelog": "1.1.6",
-    "ghooks": "1.2.4",
-    "npm-run-all": "2.2.2",
-    "standard": "7.1.2",
-    "updtr": "0.2.0",
-    "validate-commit-msg": "2.6.1"
-  },
   "config": {
-    "ghooks": {
-      "pre-commit": "npm-run-all lint",
-      "commit-msg": "validate-commit-msg"
-    },
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
     }
   },
-  "standard": {
-    "parser": "babel-eslint",
-    "globals": [
-      "PWD",
-      "__BASE_DIR__"
-    ]
+  "devDependencies": {
+    "updtr": "0.2.0"
   },
   "dependencies": {
-    "@schibstedspain/suistudio-fatigue-dev": "github:SUI-Components/suistudio-fatigue-dev#9edf485",
+    "@schibstedspain/suistudio-fatigue-dev": "github:SUI-Components/suistudio-fatigue-dev#9585c13",
     "babel-standalone": "6.12.0",
     "bundle-loader": "0.5.4",
     "codemirror": "5.16.0",
@@ -78,5 +62,12 @@
       "react",
       "react-dom"
     ]
-  }
+  },
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
+  "commit-msg": ["validate-commit-msg"],
+  "eslintConfig": {"extends": ["./node_modules/@schibstedspain/linting-rules/eslintrc.js"]},
+  "sasslintConfig": "./node_modules/@schibstedspain/linting-rules/sass-lint.yml"
 }

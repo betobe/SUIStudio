@@ -1,9 +1,13 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import ReactMarkdown from 'react-markdown'
 
 import tryRequire from './try-require'
 
 class Markdown extends React.Component {
+  propTypes = {
+    params: PropTypes.object
+  }
+
   constructor (props, ctxt) {
     super(props, ctxt)
     this.state = {readme: false}

@@ -1,7 +1,15 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import {Link} from 'react-router'
 
 export default class Workbench extends React.Component {
+  propTypes = {
+    children: PropTypes.element,
+    params: PropTypes.shape({
+      category: PropTypes.string,
+      component: PropTypes.string
+    })
+  }
+
   render () {
     const {category, component} = this.props.params
     const TAB_CLASS = 'sui-StudioTabs-tab'

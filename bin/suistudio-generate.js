@@ -1,3 +1,5 @@
+/* eslint no-console:0 */
+
 const program = require('commander')
 const colors = require('colors')
 const fse = require('fs-extra')

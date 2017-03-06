@@ -1,3 +1,5 @@
+/* eslint no-console:0 */
+
 const colors = require('colors')
 const spawn = require('child_process').spawn
 const readFileSync = require('fs').readFileSync

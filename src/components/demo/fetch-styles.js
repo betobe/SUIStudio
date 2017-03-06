@@ -1,3 +1,6 @@
+/* eslint no-console:0 */
+/* global __BASE_DIR__ */
+
 const reqThemePlayGround = require.context(`!css-content-loader!css-loader!sass-loader!${__BASE_DIR__}/demo`, true, /^.*\/themes\/.*\.scss/)
 const reqComponentsSCSS = require.context(`!css-content-loader!css-loader!sass-loader!${__BASE_DIR__}/components`, true, /^\.\/\w+\/\w+\/src\/index\.scss/)
 
@@ -30,4 +33,3 @@ export default /* stylesFor */ ({category, component, withTheme = 'default'} = {
       } catch (e) { console.warn(`No styles for ${category}/${component}`) }
     })
   })
-

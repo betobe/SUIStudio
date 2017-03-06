@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 
 import tryRequire from './try-require'
 
@@ -8,17 +8,19 @@ const Methods = ({methods}) => {
   const Params = ({params}) => {
     return (
       <div className='sui-StudioMethods-param'>
-      {
-        params.map(
-          (param, index) => {
-            const type = param.type ? `[${param.type ? param.type.name : ''}]` : ''
-            return <p key={index} className='sui-StudioMethods-paramName'>{`${param.name} ${type}: ${param.description}`}</p>
-          }
-        )
-      }
+        {
+          params.map(
+            (param, index) => {
+              const type = param.type ? `[${param.type ? param.type.name : ''}]` : ''
+              return <p key={index} className='sui-StudioMethods-paramName'>{`${param.name} ${type}: ${param.description}`}</p>
+            }
+          )
+        }
       </div>
     )
   }
+
+  Params.propTypes = {params: PropTypes.array}
 
   return (
     <div className='sui-StudioMethods'>
@@ -41,6 +43,7 @@ const Methods = ({methods}) => {
   )
 }
 Methods.displayName = 'Methods'
+Methods.propTypes = {methods: PropTypes.array}
 
 const Props = ({props = {}}) => {
   return (
@@ -61,8 +64,16 @@ const Props = ({props = {}}) => {
   )
 }
 Props.displayName = 'Props'
+Props.propTypes = {props: PropTypes.object}
 
 class ReactDocGen extends React.Component {
+  static propTypes = {
+    params: PropTypes.shape({
+      category: PropTypes.string,
+      component: PropTypes.string
+    })
+  }
+
   constructor (props, ctxt) {
     super(props, ctxt)
     this.state = {parsed: false}

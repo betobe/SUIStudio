@@ -1,4 +1,5 @@
-import React from 'react'
+/* eslint react/no-multi-comp:0 */
+import React, {PropTypes} from 'react'
 import cx from 'classnames'
 
 import Preview from '../preview'
@@ -57,6 +58,15 @@ export default class Demo extends React.Component {
       )
     }
     return demo.props
+  }
+
+  static propTypes = {
+    category: PropTypes.string,
+    component: PropTypes.string,
+    params: PropTypes.shape({
+      category: PropTypes.string,
+      component: PropTypes.string
+    })
   }
 
   constructor (props, context) {
@@ -129,14 +139,14 @@ export default class Demo extends React.Component {
           <ContextButtons
             ctxt={ctxt}
             selected={ctxtSelectedIndex}
-            onContextChange={this.handleContextChange.bind(this)} />
+            onContextChange={this.handleContextChange} />
           <ThemesButtons
             themes={themes}
             selected={themeSelectedIndex}
-            onThemeChange={this.handleThemeChange.bind(this)} />
+            onThemeChange={this.handleThemeChange} />
           <RoutesButtons routes={routes} category={category} component={component} />
         </div>
-        <div className='sui-StudioDemo-codeButton' onClick={this.handleCode.bind(this)}>
+        <div className='sui-StudioDemo-codeButton' onClick={this.handleCode}>
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
             <path d='M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1 10.199l-3.64 1.801 3.64 1.796v2.204l-6-2.935v-2.131l6-2.934v2.199zm8 2.866l-6 2.935v-2.204l3.64-1.796-3.64-1.801v-2.199l6 2.935v2.13z' />
           </svg>
@@ -158,11 +168,11 @@ export default class Demo extends React.Component {
     )
   }
 
-  handleCode () {
+  handleCode = () => {
     this.setState({codeOpen: !this.state.codeOpen})
   }
 
-  handleContextChange (ctxtType, index) {
+  handleContextChange = (ctxtType, index) => {
     this.setState({
       ctxtType,
       ctxtSelectedIndex: index,
@@ -170,7 +180,7 @@ export default class Demo extends React.Component {
     })
   }
 
-  handleThemeChange (theme, index) {
+  handleThemeChange = (theme, index) => {
     const {category, component} = this.props.params
     stylesFor({category, component, withTheme: theme}).then(style => {
       this.setState({

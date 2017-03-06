@@ -1,9 +1,15 @@
-import React from 'react'
+/* global __BASE_DIR__ */
+
+import React, {PropTypes} from 'react'
 import {Link} from 'react-router'
 
 const reqPackages = require.context(`${__BASE_DIR__}/components`, true, /^\.\/\w+\/\w+\/package\.json/)
 
 export default class Navigation extends React.Component {
+  propTypes = {
+    handleClick: PropTypes.func
+  }
+
   constructor () {
     super()
     const components = reqPackages.keys()

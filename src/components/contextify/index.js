@@ -4,7 +4,6 @@ import hoist from './hoist-non-react-statics'
 
 const contextify = (types = {}, context) => (WrappedComponent) => {
   class Contextify extends Component {
-
     static get displayName () {
       return WrappedComponent.displayName
     }
@@ -19,7 +18,6 @@ const contextify = (types = {}, context) => (WrappedComponent) => {
     render () {
       return (<WrappedComponent {...this.props} />)
     }
-
   }
 
   return hoist(Contextify, WrappedComponent)

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import cx from 'classnames'
 
 const ThemesButtons = ({themes, onThemeChange, selected}) => {
@@ -38,4 +38,9 @@ const ThemesButtons = ({themes, onThemeChange, selected}) => {
 }
 
 ThemesButtons.displayName = 'ThemesButtons'
+ThemesButtons.propTypes = {
+  themes: PropTypes.array,
+  onThemeChange: PropTypes.func,
+  selected: PropTypes.bool
+}
 export default ThemesButtons
