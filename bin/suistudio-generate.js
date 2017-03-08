@@ -94,7 +94,7 @@ COMPONENT_PACKAGE_JSON_FILE,
   "main": "lib/index.js",
   "scripts": {
     "build": "rm -Rf ./lib && mkdir -p ./lib && npm run babel && npm run sass",
-    "babel": "../../../node_modules/.bin/babel --preset schibsted-spain ./src --out-dir ./lib",
+    "babel": "../../../node_modules/.bin/babel --presets schibsted-spain ./src --out-dir ./lib",
     "sass": "../../../node_modules/.bin/cpx \\"./src/**/*.scss\\" ./lib",
     "preversion": "echo \\"preversion\\"",
     "version": "npm run build",
