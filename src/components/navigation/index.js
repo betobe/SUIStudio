@@ -18,14 +18,21 @@ export default class Navigation extends React.Component {
                                   .map(k => {
                                     const [category, component] = k.split('/')
                                     return {category, component}
-                                  })
-    this.state = {components}
+                                  }) || []
+    this.state = {components, search: ''}
   }
 
   render () {
+    const {components, search} = this.state
     return (
       <nav className='sui-StudioNav' >
-        <input className='sui-StudioNav-searchInput' type='text' placeholder='Search' />
+        <input
+          className='sui-StudioNav-searchInput'
+          type='search'
+          placeholder='Search'
+          value={this.state.search}
+          onChange={(e) => this.setState({search: e.target.value})}
+        />
         <ul className='sui-StudioTabs sui-StudioTabs--vertical'>
           <li onClick={this.props.handleClick} className='sui-StudioTabs-tab'>
             <Link
@@ -35,20 +42,25 @@ export default class Navigation extends React.Component {
             >Home</Link>
           </li>
           {
-            (this.state.components || []).map((link, index) => {
-              const {category, component} = link
-              return (
-                <li key={index} onClick={this.props.handleClick} className='sui-StudioTabs-tab'>
-                  <Link
-                    className='sui-StudioTabs-link'
-                    activeClassName='sui-StudioTabs-link--active'
-                    to={`/workbench/${category}/${component}/`}
-                  >
-                    <span className='sui-StudioTabs-label'>{category} / </span><strong>{component}</strong>
-                  </Link>
-                </li>
+            components
+              .filter(
+                ({category, component}) =>
+                  category.includes(search) || component.includes(search)
               )
-            })
+              .map((link, index) => {
+                const {category, component} = link
+                return (
+                  <li key={index} onClick={this.props.handleClick} className='sui-StudioTabs-tab'>
+                    <Link
+                      className='sui-StudioTabs-link'
+                      activeClassName='sui-StudioTabs-link--active'
+                      to={`/workbench/${category}/${component}/`}
+                    >
+                      <span className='sui-StudioTabs-label'>{category} / </span><strong>{component}</strong>
+                    </Link>
+                  </li>
+                )
+              })
           }
         </ul>
         <div className='sui-StudioNav-logo'>
