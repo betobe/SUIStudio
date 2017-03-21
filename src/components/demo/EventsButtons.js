@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react'
 
 const reqFixturesDemo =
-  require.context(`${__BASE_DIR__}/utils`, true, /^.*\/fixtures\/.*\.js/)
+  require.context(`${__BASE_DIR__}`, true, /\/demo\/fixtures\/.*\.js/)
 
 const executeUseCase = ({domain, useCase, params}) => {
-  const base = reqFixturesDemo(`./fixtures/${useCase}.js`).default
+  const base = reqFixturesDemo(`./demo/fixtures/${useCase}.js`).default
   domain.get(useCase).execute({
     ...base,
     ...params
