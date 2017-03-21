@@ -12,6 +12,7 @@ import stylesFor, {themesFor} from './fetch-styles'
 import ContextButtons from './ContextButtons'
 import RoutesButtons from './RoutesButtons'
 import ThemesButtons from './ThemesButtons'
+import EventsButtons from './EventsButtons'
 import contextify from '../contextify'
 import {matchPattern, compilePattern} from 'react-router/lib/PatternUtils' // Thx for that!
 import deepmerge from 'deepmerge'
@@ -24,15 +25,15 @@ const isFunction = (fnc) => !!(fnc && fnc.constructor && fnc.call && fnc.apply)
 
 export default class Demo extends React.Component {
   static bootstrapWith (demo, {category, component, style, themes}) {
-    tryRequire({category, component}).then(([Component, playground, ctxt, routes]) => {
+    tryRequire({category, component}).then(([Component, playground, ctxt, routes, events]) => {
       if (routes) { compilePattern(routes.pattern) }
       if (isFunction(ctxt)) {
         return ctxt().then(context => {
-          demo.setState({playground, Component, ctxt: context, routes, style, themes})
+          demo.setState({playground, Component, ctxt: context, routes, style, themes, events})
         })
       }
 
-      demo.setState({playground, Component, ctxt, routes, style, themes})
+      demo.setState({playground, Component, ctxt, routes, style, themes, events})
     })
   }
 
@@ -109,14 +110,21 @@ export default class Demo extends React.Component {
       ctxt,
       ctxtSelectedIndex,
       ctxtType,
+      events,
       playground,
       routes,
+      style,
       themeSelectedIndex,
       themes,
-      style
     } = this.state
+    let domain
+
     if (Component.contextTypes && ctxt) {
       Component = contextify(Component.contextTypes, contextByType(ctxt, ctxtType))(Component)
+    }
+
+    if (events && ctxt && ctxtType) {
+      domain = contextByType(ctxt, ctxtType).domain
     }
 
     /* Begin Black Magic */
@@ -145,6 +153,7 @@ export default class Demo extends React.Component {
             selected={themeSelectedIndex}
             onThemeChange={this.handleThemeChange} />
           <RoutesButtons routes={routes} category={category} component={component} />
+          <EventsButtons events={events} domain={domain} />
         </div>
         <div className='sui-StudioDemo-codeButton' onClick={this.handleCode}>
           <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
