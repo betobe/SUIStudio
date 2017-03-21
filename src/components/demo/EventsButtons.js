@@ -25,6 +25,7 @@ const EventsButtons = ({events, domain}) => {
               event => (
                 <li className='sui-StudioTabs-tab'>
                   <button
+                    key={`${useCase}#${event}`}
                     className='sui-StudioTabs-link'
                     onClick={evt => executeUseCase({domain, useCase, params: events[useCase][event]})}>{event}</button>
                 </li>
