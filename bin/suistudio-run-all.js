@@ -5,6 +5,7 @@ const spawn = require('child_process').spawn
 const readFileSync = require('fs').readFileSync
 const program = require('commander')
 const BASE_DIR = process.cwd()
+const CODE_OK = 0
 const COMPONENTS_LIST = `${BASE_DIR}/.COMPONENTS`
 const cwds = readFileSync(COMPONENTS_LIST, 'utf8')
                               .trim()
@@ -21,7 +22,10 @@ const doTask = (cwd) => {
   return new Promise((resolve, reject) => {
     const running = spawn(command, args, {cwd})
       .on('error', reject)
-      .on('close', (code) => resolve({prefix, code}))
+      .on('close', (code) => {
+        if (code !== CODE_OK) { process.exit(code) }
+        resolve({prefix, code})
+      })
     running.stdout.on('data', data => console.log(colors.gray(`[${prefix}]: ${data.toString()}`)))
     running.stderr.on('data', data => console.log(colors.red(`[${prefix}]: ${data.toString()}`)))
   })
