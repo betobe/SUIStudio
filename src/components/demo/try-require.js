@@ -63,7 +63,6 @@ const tryRequire = ({category, component}) => {
         const bundler = reqEventsPlayGround(`./${category}/${component}/events.js`)
         bundler(events => resolve(events))
       } catch (e) {
-          debugger
         return resolve(false)
       }
     })
