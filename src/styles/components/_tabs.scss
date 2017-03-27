@@ -14,12 +14,8 @@
     border-bottom: 1px dashed $fgc-navbar;
     clear: right;
     display: block;
-    font-family: cursive;
-    font-size: 125%;
     margin-bottom: 2px;
     position: relative;
-
-
   }
 
   &-link {
@@ -30,10 +26,8 @@
     color: $fgc-navbar;
     cursor: pointer;
     display: inline-block;
-    font-size: 75%;
     outline: none;
     text-decoration: none;
-    text-transform: uppercase;
     white-space: nowrap;
 
     &--active,
@@ -62,7 +56,7 @@
 
       &-link {
         border-bottom-width: 2px;
-        padding: .75em 1.5em;
+        padding: .5em 1em;
       }
     }
   }
