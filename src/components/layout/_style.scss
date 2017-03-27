@@ -33,16 +33,11 @@
     text-indent: 0;
   }
 
-  .sui-Studio-navIcon {
-    @include icon-pin($fgc-navbar);
-  }
-
   @media (min-width: map-get($breakpoints, 'm')) {
     &,
     .sui-StudioTabs-link {
-      width: $w-sidebar-m-up;
+      width: $w-sidebar;
     }
-
   }
 }
 
@@ -80,32 +75,37 @@
       transition: width .25s ease-out;
     }
 
-    &--hover,
-    &--fixed {
-      .sui-Studio-sidebarBody {
-        @include sui-studio-sidebar--max;
-      }
+    &Overlay {
+      background: $c-darken;
+      bottom: 0;
+      display: none;
+      left: 0;
+      position: fixed;
+      right: 0;
+      top: 0;
+      z-index: 9;
     }
 
-    &--fixed {
-      width: $w-sidebar;
-
+    &--open {
       .sui-Studio-sidebarBody {
+        @include sui-studio-sidebar--max;
+
         .sui-Studio-navIcon {
-          @include icon-pin($c-white);
+          @include icon-menu($c-white);
           background-color: $c-primary;
         }
       }
-    }
 
-    @media (min-width: map-get($breakpoints, 'm')) {
-      &Body,
-      &--fixed {
-        max-width: 250px;
+      & + .sui-Studio-sidebarOverlay {
+        display: block;
       }
 
-      &--fixed {
-        width: $w-sidebar-m-up;
+      @media (min-width: map-get($breakpoints, 'm')) {
+        width: $w-sidebar;
+
+        & + .sui-Studio-sidebarOverlay {
+          display: none;
+        }
       }
     }
   }

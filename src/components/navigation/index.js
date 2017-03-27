@@ -7,7 +7,8 @@ const reqPackages = require.context(`${__BASE_DIR__}/components`, true, /^\.\/\w
 
 export default class Navigation extends React.Component {
   propTypes = {
-    handleClick: PropTypes.func
+    handleClick: PropTypes.func,
+    handleSearch: PropTypes.func
   }
 
   constructor () {
@@ -32,6 +33,7 @@ export default class Navigation extends React.Component {
           placeholder='Search'
           value={this.state.search}
           onChange={(e) => this.setState({search: e.target.value})}
+          onFocus={this.props.handleSearch}
         />
         <ul className='sui-StudioTabs sui-StudioTabs--vertical'>
           <li onClick={this.props.handleClick} className='sui-StudioTabs-tab'>
