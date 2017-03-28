@@ -1,3 +1,4 @@
+/* global __BASE_DIR__ */
 import React, {PropTypes} from 'react'
 
 const reqFixturesDemo =

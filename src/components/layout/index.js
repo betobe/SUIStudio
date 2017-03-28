@@ -14,8 +14,8 @@ export default class Layout extends React.Component {
 
   constructor (props, context) {
     super(props, context)
-
-    this.handleClick = this.handleClick.bind(this)
+    this.clickHandler = this.handleClick.bind(this)
+    this.navigationClickHandler = this.handleNavigationClick.bind(this)
     this.state = {isOpen: false}
   }
 
@@ -23,31 +23,41 @@ export default class Layout extends React.Component {
     this.setState({isOpen: !this.state.isOpen})
   }
 
+  handleNavigationClick () {
+    if (this.overlayElement.clientWidth) {
+      this.setState({isOpen: false})
+    }
+  }
+
   render () {
     const {children} = this.props
     const {isOpen} = this.state
     return (
       <div className='sui-Studio'>
-        <div
-          onMouseOver={() => this.setState({isMouseOver: true})}
-          onMouseOut={() => this.setState({isMouseOver: false})}
-          className={cx({
-            'sui-Studio-sidebar': true,
-            'sui-Studio-sidebar--hover': this.state.isMouseOver,
-            'sui-Studio-sidebar--fixed': this.state.isOpen
-          })}
-        >
+        <div className={cx({
+          'sui-Studio-sidebar': true,
+          'sui-Studio-sidebar--open': this.state.isOpen
+        })} >
           <div className='sui-Studio-sidebarBody'>
-            <input className='sui-Studio-toggle' type='checkbox' id='drawer-toggle' checked={isOpen} onChange={this.handleClick} name='drawer-toggle' />
+            <input className='sui-Studio-toggle' type='checkbox' id='drawer-toggle' checked={isOpen} onChange={this.clickHandler} name='drawer-toggle' />
             <label className='sui-Studio-navIcon' htmlFor='drawer-toggle' id='drawer-toggle-label' />
-            <Navigation />
+            <Navigation
+              handleClick={this.navigationClickHandler}
+              handleSearch={() => { this.setState({isOpen: true}) }}
+            />
           </div>
         </div>
+        <div
+          className='sui-Studio-sidebarOverlay'
+          ref={(div) => { this.overlayElement = div }}
+          onClick={this.clickHandler}
+        />
         <div className='sui-Studio-main'>
           {
             children !== null ? children : this._mainReadme
           }
         </div>
+
       </div>
     )
   }

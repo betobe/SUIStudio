@@ -115,7 +115,7 @@ export default class Demo extends React.Component {
       routes,
       style,
       themeSelectedIndex,
-      themes,
+      themes
     } = this.state
     let domain
 

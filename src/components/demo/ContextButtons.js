@@ -22,10 +22,9 @@ const ContextButtons = ({ctxt, onContextChange, selected}) => {
                 'sui-StudioTabs-link--active': selected === index
               })
               return (
-                <li className='sui-StudioTabs-tab'>
+                <li key={`${ctxtType}${index}`} className='sui-StudioTabs-tab'>
                   <button
                     className={className}
-                    key={index}
                     onClick={(evt) => onContextChange(ctxtType, index)}>{ctxtType}</button>
                 </li>
               )
