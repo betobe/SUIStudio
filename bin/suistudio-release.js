@@ -1,9 +1,7 @@
 /* eslint no-console:0 */
 
 const spawn = require('child_process').spawn
-const readFileSync = require('fs').readFileSync
 const BASE_DIR = process.cwd()
-const COMPONENTS_LIST = `${BASE_DIR}/.COMPONENTS`
 
 const RELEASE_CODES = {
   0: 'clean',
@@ -20,10 +18,7 @@ const releasesByPackages = (pkg) => {
   })
 }
 
-const releasesStatus = readFileSync(COMPONENTS_LIST, 'utf8')
-                              .trim()
-                              .split('\n')
-                              .map(releasesByPackages)
+const releasesStatus = require('./shared').components(BASE_DIR).map(releasesByPackages)
 
 const releaseEachPkg = ({pkg, code} = {}) => {
   return new Promise((resolve, reject) => {

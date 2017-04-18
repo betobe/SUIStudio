@@ -1,14 +1,9 @@
 /* eslint no-console:0 */
 
 const conventionalChangelog = require('conventional-changelog')
-const readFileSync = require('fs').readFileSync
-
 const BASE_DIR = process.cwd()
-const COMPONENTS_LIST = `${BASE_DIR}/.COMPONENTS`
 
-var packagesWithChangelog = readFileSync(COMPONENTS_LIST, 'utf8')
-                              .trim()
-                              .split('\n')
+const packagesWithChangelog = require('./shared').components(BASE_DIR)
 
 let status = {}
 packagesWithChangelog.forEach((pkg) => {

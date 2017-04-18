@@ -6,15 +6,23 @@ const onlyFolders = (rootPath, fileName) => {
   return statSync(path.join(rootPath, fileName)).isDirectory()
 }
 
-module.exports = {
-  cwds: (baseDir) => {
-    const rootDir = path.join(baseDir, 'components')
+const cwds = (baseDir) => {
+  const rootDir = path.join(baseDir, 'components')
 
-    return readdirSync(rootDir)
-      .filter(file => onlyFolders(rootDir, file))
-      .map(folder => readdirSync(path.join(rootDir, folder))
-        .filter(file => onlyFolders(path.join(rootDir, folder), file))
-        .map(file => path.join(rootDir, folder, file))
-      ).reduce((x, y) => x.concat(y)) // flatten
+  return readdirSync(rootDir)
+    .filter(file => onlyFolders(rootDir, file))
+    .map(folder => readdirSync(path.join(rootDir, folder))
+      .filter(file => onlyFolders(path.join(rootDir, folder), file))
+      .map(file => path.join(rootDir, folder, file))
+    ).reduce((x, y) => x.concat(y)) // flatten
+}
+
+module.exports = {
+  cwds: cwds,
+  components: (baseDir) => {
+    return cwds(baseDir).map(folder => {
+      const [component, category] = folder.split('/').reverse()
+      return `${category}/${component}`
+    })
   }
 }
