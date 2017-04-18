@@ -5,8 +5,7 @@ const spawn = require('child_process').spawn
 const program = require('commander')
 const BASE_DIR = process.cwd()
 const CODE_OK = 0
-const COMPONENTS_LIST = `${BASE_DIR}/.COMPONENTS`
-const cwds = require('./shared').cwds(BASE_DIR, COMPONENTS_LIST)
+const cwds = require('./shared').cwds(BASE_DIR)
 
 program
   .parse(process.argv)
