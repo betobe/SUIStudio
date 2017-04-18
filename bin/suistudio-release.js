@@ -18,7 +18,7 @@ const releasesByPackages = (pkg) => {
   })
 }
 
-const releasesStatus = require('./shared').components(BASE_DIR).map(releasesByPackages)
+const releasesStatus = require('./walker').componentsName(BASE_DIR).map(releasesByPackages)
 
 const releaseEachPkg = ({pkg, code} = {}) => {
   return new Promise((resolve, reject) => {

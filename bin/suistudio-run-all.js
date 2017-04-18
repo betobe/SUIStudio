@@ -5,7 +5,7 @@ const spawn = require('child_process').spawn
 const program = require('commander')
 const BASE_DIR = process.cwd()
 const CODE_OK = 0
-const cwds = require('./shared').cwds(BASE_DIR)
+const cwds = require('./walker').componentsFullPath(BASE_DIR)
 
 program
   .parse(process.argv)

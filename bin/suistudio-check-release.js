@@ -3,7 +3,7 @@
 const conventionalChangelog = require('conventional-changelog')
 const BASE_DIR = process.cwd()
 
-const packagesWithChangelog = require('./shared').components(BASE_DIR)
+const packagesWithChangelog = require('./walker').componentsName(BASE_DIR)
 
 let status = {}
 packagesWithChangelog.forEach((pkg) => {
