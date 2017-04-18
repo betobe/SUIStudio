@@ -1,13 +1,10 @@
 /* eslint no-console:0 */
 
 const colors = require('colors')
-const {remove, readFileSync} = require('fs-extra')
+const {remove} = require('fs-extra')
 const BASE_DIR = process.cwd()
 const COMPONENTS_LIST = `${BASE_DIR}/.COMPONENTS`
-const cwds = readFileSync(COMPONENTS_LIST, 'utf8')
-                              .trim()
-                              .split('\n')
-                              .map(pkg => `${BASE_DIR}/components/${pkg}`)
+const cwds = require('./shared').cwds(BASE_DIR, COMPONENTS_LIST)
 
 const removeNodeModulesFolder = (cwd) => {
   const [component, category] = cwd.split('/').reverse()
