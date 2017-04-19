@@ -3,6 +3,7 @@ const statSync = require('fs').statSync
 const path = require('path')
 
 const onlyFolders = (filePath) => statSync(filePath).isDirectory()
+const flatten = (x, y) => x.concat(y)
 
 const cwds = (baseDir) => {
   const rootDir = path.join(baseDir, 'components')
@@ -13,7 +14,7 @@ const cwds = (baseDir) => {
     .map(folder => readdirSync(folder)
       .map(file => path.join(folder, file))
       .filter(onlyFolders)
-    ).reduce((x, y) => x.concat(y)) // flatten
+    ).reduce(flatten, [])
 }
 
 module.exports = {
