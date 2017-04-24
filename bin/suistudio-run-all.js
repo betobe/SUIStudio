@@ -2,15 +2,10 @@
 
 const colors = require('colors')
 const spawn = require('child_process').spawn
-const readFileSync = require('fs').readFileSync
 const program = require('commander')
 const BASE_DIR = process.cwd()
 const CODE_OK = 0
-const COMPONENTS_LIST = `${BASE_DIR}/.COMPONENTS`
-const cwds = readFileSync(COMPONENTS_LIST, 'utf8')
-                              .trim()
-                              .split('\n')
-                              .map(pkg => `${BASE_DIR}/components/${pkg}`)
+const cwds = require('./walker').componentsFullPath(BASE_DIR)
 
 program
   .parse(process.argv)

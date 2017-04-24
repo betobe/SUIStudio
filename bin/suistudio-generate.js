@@ -50,10 +50,6 @@ const COMPONENT_PLAYGROUND_FILE = `${DEMO_DIR}playground`
 const COMPONENT_CONTEXT_FILE = `${DEMO_DIR}context.js`
 const COMPONENT_ROUTES_FILE = `${DEMO_DIR}routes.js`
 
-const COMPONENTS_LIST = `${BASE_DIR}/.COMPONENTS`
-
-fse.appendFileSync(COMPONENTS_LIST, `${category}/${component}\n`)
-
 const writeFile = (path, body) => {
   fse.outputFile(
     path,
