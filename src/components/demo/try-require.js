@@ -1,7 +1,7 @@
 /* global __BASE_DIR__ */
 
 const reqComponentsSrc =
-  require.context(`bundle-loader?lazy!${__BASE_DIR__}/components`, true, /^\.\/\w+\/\w+\/src\/index\.jsx?/)
+  require.context(`bundle-loader?lazy!${__BASE_DIR__}/components`, true, /^\.\/[\w-]+\/[\w-]+\/src\/index\.jsx?/)
 const reqComponentsPlayGround =
   require.context(`bundle-loader?lazy!raw-loader!${__BASE_DIR__}/demo`, true, /^.*\/playground/)
 const reqContextPlayGround =
