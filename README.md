@@ -8,9 +8,9 @@
 
 # Convention
 ## Naming
-lowerCamelCase is the choice for directories and files. Also, you will find that components named with dash (-) doesn't work.
+lowerCamelCase is the choice for directories and files.
 ```
-components/house/mainwindow/...
+components/house/mainWindow/...
 ```
 
 # Workflows
